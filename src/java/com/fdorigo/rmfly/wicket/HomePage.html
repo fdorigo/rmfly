@@ -1,0 +1,43 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns:wicket="http://wicket.apache.org"  
+      xml:lang="en"  
+      lang="en"> 
+
+    <head> 
+        <wicket:head> 
+            <title>Wicket Example</title> 
+        </wicket:head> 
+    </head> 
+    <body> 
+        <wicket:extend>
+            <div>
+                <div style="margin-top: 20px; padding-left: 15px;">
+                    <h2 style="color:#333333; white-space: nowrap;">Please Sign Our Guest List</h2>
+                    <div wicket:id="feedback"></div>
+                    <form wicket:id="record_form">
+                        <label>First Name:
+                            <span wicket:id="firstNameBorder">
+                                <input wicket:id="firstName" type="text"/>
+                            </span>
+                        </label>
+                        <br/>
+                        <label>Last Name:
+                            <span wicket:id="lastNameBorder">
+                                <input wicket:id="lastName" type="text"/>
+                            </span>
+                        </label>
+                        <br/>
+                        <input type="submit"/><input type="reset"/>
+                    </form>
+                </div>
+                <hr style="background-color: #E9601A; color: #E9601A; height: 1px; margin-top: 20px;"/>
+                <div style="margin-top: 20px; padding-left: 15px;">
+                    <h2 style="color:#333333; white-space: nowrap;">Visitors Who Have Signed Our Guest List</h2>
+                    <div wicket:id="recordlist" style="white-space: nowrap;">
+                        <span wicket:id="name" style="font-size: 1.2em; color: #333333;">name</span>
+                    </div>
+                </div>
+            </div>
+        </wicket:extend> 
+    </body> 
+</html>

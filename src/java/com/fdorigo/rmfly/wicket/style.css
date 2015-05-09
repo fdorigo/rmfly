@@ -1,0 +1,15 @@
+body {
+    white-space: nowrap;
+}
+
+.feedbackPanelERROR {
+    color: red !important;
+    list-style: circle;
+    font-weight: bold;
+}
+
+.feedbackPanelINFO {
+    color: green;
+    list-style: circle;
+    font-weight: bold;
+}
