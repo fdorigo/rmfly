@@ -10,6 +10,7 @@ import com.fdorigo.rmfly.jps.session.AbstractFacade;
 import com.fdorigo.rmfly.jps.session.RecordFacade;
 import com.fdorigo.rmfly.wicket.components.NameTextField;
 import com.fdorigo.rmfly.wicket.dataproviders.RecordDataProvider;
+import java.util.logging.Logger;
 import javax.ejb.EJB;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
@@ -21,6 +22,8 @@ import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.LoadableDetachableModel;
 
 public class HomePage extends BasePage {
+
+    private static final Logger LOG = Logger.getLogger(HomePage.class.getName());
 
     @EJB(name = "RecordFacade")
     private RecordFacade recordFacade;
@@ -76,5 +79,4 @@ public class HomePage extends BasePage {
         add(recordListView);
 
     }
-
 }
