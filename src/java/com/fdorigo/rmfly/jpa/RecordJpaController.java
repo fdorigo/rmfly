@@ -11,10 +11,11 @@ import com.fdorigo.rmfly.jpa.exceptions.PreexistingEntityException;
 import com.fdorigo.rmfly.jpa.exceptions.RollbackFailureException;
 import java.io.Serializable;
 import java.util.List;
+import java.util.logging.Logger;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
+import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import javax.transaction.UserTransaction;
@@ -126,6 +127,8 @@ public class RecordJpaController implements Serializable {
 
     private List<Record> findRecordEntities(boolean all, int maxResults, int firstResult) {
         EntityManager em = getEntityManager();
+        LOG.info("findRecordEntities");
+
         try {
             CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
             cq.select(cq.from(Record.class));
@@ -148,6 +151,7 @@ public class RecordJpaController implements Serializable {
             em.close();
         }
     }
+    private static final Logger LOG = Logger.getLogger(RecordJpaController.class.getName());
 
     public int getRecordCount() {
         EntityManager em = getEntityManager();
@@ -161,5 +165,5 @@ public class RecordJpaController implements Serializable {
             em.close();
         }
     }
-    
+
 }

@@ -6,6 +6,7 @@
 package com.fdorigo.rmfly.jps.session;
 
 import java.util.List;
+import java.util.logging.Logger;
 import javax.persistence.EntityManager;
 
 /**
@@ -34,8 +35,10 @@ public abstract class AbstractFacade<T> {
     }
 
     public T find(Object id) {
+        LOG.info("find");
         return getEntityManager().find(entityClass, id);
     }
+    private static final Logger LOG = Logger.getLogger(AbstractFacade.class.getName());
 
     public List<T> findAll() {
         javax.persistence.criteria.CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();

@@ -18,6 +18,7 @@ import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.markup.repeater.Item;
 import org.apache.wicket.markup.repeater.data.DataView;
+import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.Model;
 
 /**
@@ -37,16 +38,23 @@ public final class NnumberPage extends WebPage {
         final TextField<String> searchField = new TextField<>("nNumber", Model.of(""));
         searchField.setRequired(true);
 
-        Form<Record> searchForm = new Form<Record>("nNumberForm") {
+        Model<Record> recordModel = new Model<Record>();
+
+        Form<Record> searchForm = new Form<Record>("nNumberForm", new CompoundPropertyModel<Record>(recordModel)) {
 
             @Override
             protected void onSubmit() {
                 final String record = searchField.getModelObject();
 
                 LOG.info("This is it: " + record);
-                
+
                 Record rec = recordFacade.find(record);
-                //setModelObject(new Record());
+                if (rec == null) {
+                    rec = recordFacade.buildFromMaster(record);
+                    recordFacade.create(rec);
+                }
+                LOG.info("This is it: " + rec);
+                setModelObject(rec);
             }
         };
 
@@ -64,10 +72,9 @@ public final class NnumberPage extends WebPage {
 
             @Override
             protected void populateItem(Item<Record> item) {
-                
-                LOG.info("Looking for some shit:");
-                
+
                 Record record = item.getModelObject();
+                LOG.info("Looking for some shit: " + record.getFirstName());
                 item.add(new Label("name", record.toString()));
             }
 

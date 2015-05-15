@@ -32,6 +32,11 @@ public abstract class RecordDataProvider implements IEjbDataProvider<Record> {
         LoadableDetachableModel<Record> ldm = new LoadableDetachableModel<Record>(object) {
             @Override
             protected Record load() {
+                if (getFacade().find(id) == null)
+                {
+                    
+                }
+                
                 return getFacade().find(id);
             }
         };

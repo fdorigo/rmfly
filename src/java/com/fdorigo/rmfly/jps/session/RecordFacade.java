@@ -5,7 +5,9 @@
  */
 package com.fdorigo.rmfly.jps.session;
 
+import com.fdorigo.rmfly.jpa.entities.Master;
 import com.fdorigo.rmfly.jpa.entities.Record;
+import java.util.logging.Logger;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -27,5 +29,20 @@ public class RecordFacade extends AbstractFacade<Record> {
     public RecordFacade() {
         super(Record.class);
     }
+    
+    public Record buildFromMaster(String id) {
+        LOG.info("Building: " + id);
+        
+        if (em.find(Record.class, id) == null)
+        {
+            Master m = em.find(Master.class, id);
+            LOG.info("Master: " + m.getName());
+            Record r = new Record(id, m.getName());
+            return r;
+        }
+        
+        return null;
+    }
+    private static final Logger LOG = Logger.getLogger(RecordFacade.class.getName());
     
 }
