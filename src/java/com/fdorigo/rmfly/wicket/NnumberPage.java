@@ -46,20 +46,22 @@ public final class NnumberPage extends WebPage {
             protected void onSubmit() {
                 final String record = searchField.getModelObject();
 
-                LOG.info("This is it: " + record);
-
                 Record rec = recordFacade.find(record);
                 if (rec == null) {
                     rec = recordFacade.buildFromMaster(record);
-                    recordFacade.create(rec);
+                    //recordFacade.create(rec);
                 }
                 LOG.info("This is it: " + rec);
+                
                 setModelObject(rec);
             }
         };
 
         add(searchForm);
         searchForm.add(searchField);
+        
+        Label selectedFormLabel = new Label("selectedRecord", recordModel);
+        add(selectedFormLabel);
 
         RecordDataProvider gdp = new RecordDataProvider() {
             @Override

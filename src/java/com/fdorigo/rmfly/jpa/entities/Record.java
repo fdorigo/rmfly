@@ -16,6 +16,8 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 
 /**
  *
@@ -48,6 +50,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Record.findByIsJudged", query = "SELECT r FROM Record r WHERE r.isJudged = :isJudged"),
     @NamedQuery(name = "Record.findByCategory", query = "SELECT r FROM Record r WHERE r.category = :category")})
 public class Record implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -318,7 +321,11 @@ public class Record implements Serializable {
 
     @Override
     public String toString() {
-        return "com.fdorigo.rmfly.Record[ nnumber=" + nnumber + " ]";
+        return new ToStringBuilder(this, ToStringStyle.JSON_STYLE)
+                .append("nnum", nnumber)
+                .append("firstName", firstName)
+                .append("lastName", lastName)
+                .toString();
     }
-    
+
 }

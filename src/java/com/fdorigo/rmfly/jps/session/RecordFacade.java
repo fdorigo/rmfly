@@ -5,6 +5,7 @@
  */
 package com.fdorigo.rmfly.jps.session;
 
+import com.fdorigo.rmfly.jpa.entities.Acftref;
 import com.fdorigo.rmfly.jpa.entities.Master;
 import com.fdorigo.rmfly.jpa.entities.Record;
 import java.util.logging.Logger;
@@ -18,6 +19,9 @@ import javax.persistence.PersistenceContext;
  */
 @Stateless
 public class RecordFacade extends AbstractFacade<Record> {
+
+    private static final Logger LOG = Logger.getLogger(RecordFacade.class.getName());
+
     @PersistenceContext(unitName = "AirshowPU")
     private EntityManager em;
 
@@ -29,20 +33,30 @@ public class RecordFacade extends AbstractFacade<Record> {
     public RecordFacade() {
         super(Record.class);
     }
-    
+
     public Record buildFromMaster(String id) {
-        LOG.info("Building: " + id);
-        
-        if (em.find(Record.class, id) == null)
-        {
-            Master m = em.find(Master.class, id);
-            LOG.info("Master: " + m.getName());
-            Record r = new Record(id, m.getName());
-            return r;
+        Record newRecord = em.find(Record.class, id);
+        if (newRecord == null) {
+            newRecord = new Record(id);
+
+            final Master faaMasterRecord = em.find(Master.class, id);
+            if (faaMasterRecord != null) {
+                newRecord.setLastName(faaMasterRecord.getName());
+                newRecord.setAddressCity(faaMasterRecord.getCity());
+                newRecord.setAddressOne(faaMasterRecord.getStreet());
+                newRecord.setAddressTwo(faaMasterRecord.getStreet2());
+                newRecord.setAddressState(faaMasterRecord.getState());
+                newRecord.setAddressZip(faaMasterRecord.getZip());
+
+                final Acftref faaAircraftRecord = em.find(Acftref.class, faaMasterRecord.getMfrmdlcode());
+                if (faaAircraftRecord != null) {
+                    newRecord.setAirplaneModel(faaAircraftRecord.getModel());
+                    newRecord.setAirplaneMake(faaAircraftRecord.getMfrname());
+                }
+            }
         }
-        
-        return null;
+
+        return newRecord;
     }
-    private static final Logger LOG = Logger.getLogger(RecordFacade.class.getName());
-    
+
 }
