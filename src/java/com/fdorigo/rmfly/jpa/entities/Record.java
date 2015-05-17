@@ -58,8 +58,6 @@ public class Record implements Serializable {
     @Size(min = 1, max = 50)
     @Column(name = "nnumber")
     private String nnumber;
-    @Basic(optional = false)
-    @NotNull
     @Size(min = 1, max = 50)
     @Column(name = "first_name")
     private String firstName;

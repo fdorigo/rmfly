@@ -35,7 +35,6 @@ public abstract class AbstractFacade<T> {
     }
 
     public T find(Object id) {
-        LOG.info("find");
         return getEntityManager().find(entityClass, id);
     }
     private static final Logger LOG = Logger.getLogger(AbstractFacade.class.getName());
