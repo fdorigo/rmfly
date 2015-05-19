@@ -29,7 +29,7 @@ public class HomePage extends BasePage {
     private RecordFacade recordFacade;
 
     public HomePage() {
-
+        
         LoadableDetachableModel<Record> newRecordDetachableModel = new LoadableDetachableModel<Record>() {
             @Override
             public Record load() {

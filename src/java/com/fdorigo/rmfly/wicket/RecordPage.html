@@ -3,46 +3,145 @@
 <html xmlns:wicket="http://wicket.apache.org">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-        <title>NnumberPage</title>
-        <link rel="stylesheet" type="text/css" href="style.css"/>
+        <title>Register Airshow Participant</title>
     </head>
     <body>
-        <div>
+        <wicket:extend>
+            <div wicket:id="feedback"></div>
+            <form wicket:id="recordForm" class="pure-form pure-form-stacked">
+                <fieldset>
+                    <legend><wicket:message key="form-label" /></legend>
 
-            <div>
-                <div wicket:id="feedback"></div>
-                <form wicket:id="recordForm">
-                    <label>Enter NNumber:
-                        <input wicket:id="nnumber" name="nnumber" type="text"/>
-                    </label>
-                    <label>Enter First Name:
-                        <input wicket:id="firstName" name="firstName" type="text"/>
-                    </label>
-                    <br/>
-                    <input type="submit"/>
-                </form>
-            </div>
+                    <div class="pure-g">
 
-<!--            <div>
-            <div wicket:id="selectedRecord"> 
-            </div>
+                        <div class="pure-u-1 pure-u-md-1-3">
+                            <label>NNumber</label>
+                            <input wicket:id="nnumber" type="text" class="pure-u-23-24" />
+                        </div>
+
+                        <div class="pure-u-1 pure-u-md-1-3">
+                            <label>Arrival Date</label>
+                            <span wicket:id="arrivalDateBorder">
+                                <input wicket:id="arrivalDate" type="text" class="pure-u-23-24"/>
+                            </span>
+                        </div>
+
+                        <div class="pure-u-1 pure-u-md-1-3">
+                            <label style="margin-bottom: 12px;">Need Judging</label>
+                            <span wicket:id="needJudgingBorder">
+                                <span wicket:id="needJudging" id="needJudgingRadioChoice">
+                                    <span wicket:id="radios">
+                                        <input type="radio" wicket:id="radio" /><label wicket:id="boolval"  style="display:inline; padding: 0 20px 0 10px;"></label>
+                                    </span>
+                                </span>
+                            </span>
+                        </div>
+
+                        <div class="pure-u-1 pure-u-md-1-3">
+                            <label>First Name</label>
+                            <input wicket:id="firstName" type="text" class="pure-u-23-24"/>
+                        </div>
+
+                        <div class="pure-u-1 pure-u-md-1-3">
+                            <label>Last Name</label>
+                            <input wicket:id="lastName" type="text" class="pure-u-23-24"/>
+                        </div>
+
+                        <div class="pure-u-1 pure-u-md-1-3">
+                            <label>Primary Phone (while at the show)</label>
+                            <span wicket:id="primaryPhoneBorder">
+                                <input wicket:id="primaryPhone" type="text" class="pure-u-23-24"/>
+                            </span>
+
+                        </div>
 
 
-                <form wicket:id="recordForm">
-                    <label>Edit Record:
-                        <input wicket:id="nNumberField" name="nNumberField" type="text"/>
-                    </label>
-                    <br/>
-                    <input type="submit"/>
-                </form>
-            </div>
+                        <div class="pure-u-1 pure-u-md-1-3">
+                            <label>Home Phone</label>
+                            <input wicket:id="secondaryPhone" type="text" class="pure-u-23-24"/>
+                        </div>
 
+                        <div class="pure-u-1 pure-u-md-1-3">
+                            <label>Address</label>
+                            <input wicket:id="addressOne" name="addressOne" type="text" class="pure-u-23-24"/>
+                        </div>
 
+                        <div class="pure-u-1 pure-u-md-1-3">
+                            <label>City</label>
+                            <input wicket:id="addressCity" name="addressCity" type="text" class="pure-u-23-24"/>
+                        </div>  
 
-            <hr style="background-color: #E9601A; color: #E9601A; height: 1px; margin-top: 20px;"/>
-            <div wicket:id="recordList" style="white-space: nowrap;">
-                <span wicket:id="name" style="font-size: 1.2em; color: #333333;">name</span>
-            </div>-->
-        </div>
+                        <div class="pure-u-1 pure-u-md-1-3">
+                            <label>State</label>
+                            <input wicket:id="addressState" name="addressState" type="text" class="pure-u-23-24"/>
+                        </div>  
+
+                        <div class="pure-u-1 pure-u-md-1-3">
+                            <label>ZIP</label>
+                            <input wicket:id="addressZip" name="addressZip" type="text" class="pure-u-23-24"/>
+                        </div>
+
+                        <div class="pure-u-1 pure-u-md-1-3">
+                            <label>Email Address</label>
+                            <input wicket:id="emailAddress" name="emailAddress" type="text" class="pure-u-23-24"/>
+                        </div>
+
+                        <div class="pure-u-1 pure-u-md-1-3">
+                            <label>Airplane Make</label>
+                            <input wicket:id="airplaneMake" name="airplaneMake" type="text" class="pure-u-23-24"/>
+                        </div>
+
+                        <div class="pure-u-1 pure-u-md-1-3">
+                            <label>Airplane Model</label>
+                            <input wicket:id="airplaneModel" name="airplaneModel" type="text" class="pure-u-23-24"/>
+                        </div>
+
+                        <div class="pure-u-1 pure-u-md-1-3">
+                            <label>Manufacture Year</label>
+                            <input wicket:id="manufactureYear" name="manufactureYear" type="text" class="pure-u-23-24"/>
+                        </div>
+
+                        <div class="pure-u-1 pure-u-md-1-3">
+                            <label>Home Base</label>
+                            <input wicket:id="homebase" name="homebase" type="text" class="pure-u-23-24"/>
+                        </div>
+                        
+                        <div class="pure-u-1 pure-u-md-2-3">
+                            &nbsp;
+                        </div>
+                        <div class="pure-u-1 pure-u-md-1-3">
+                            &nbsp;
+                        </div>
+                        <div class="pure-u-1 pure-u-md-1-3">
+                            <button type="submit" class="pure-button pure-button-primary" style="margin-left: 20px;">
+                                <i class="fa fa-floppy-o"></i>
+                                Register Participant
+                            </button>
+                        </div>
+                    </div>
+                </fieldset>
+            </form>
+
+            <!--            <div>
+                        <div wicket:id="selectedRecord"> 
+                        </div>
+            
+            
+                            <form wicket:id="recordForm">
+                                <label>Edit Record:
+                                    <input wicket:id="nNumberField" name="nNumberField" type="text"/>
+                                </label>
+                                <br/>
+                                <input type="submit"/>
+                            </form>
+                        </div>
+            
+            
+            
+                        <hr style="background-color: #E9601A; color: #E9601A; height: 1px; margin-top: 20px;"/>
+                        <div wicket:id="recordList" style="white-space: nowrap;">
+                            <span wicket:id="name" style="font-size: 1.2em; color: #333333;">name</span>
+                        </div>-->
+        </wicket:extend>
     </body>
 </html>

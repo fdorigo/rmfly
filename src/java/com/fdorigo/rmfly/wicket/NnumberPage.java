@@ -9,8 +9,6 @@ import com.fdorigo.rmfly.jpa.entities.Record;
 import com.fdorigo.rmfly.jps.session.RecordFacade;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
-import org.apache.wicket.markup.html.WebPage;
-import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
@@ -22,7 +20,7 @@ import org.apache.wicket.request.mapper.parameter.PageParameters;
  *
  * @author Francesco Dorigo
  */
-public final class NnumberPage extends WebPage {
+public final class NnumberPage extends BasePage {
 
     @EJB(name = "RecordFacade")
     private RecordFacade recordFacade;
@@ -43,7 +41,7 @@ public final class NnumberPage extends WebPage {
             protected void onSubmit() {
                 final String recordString = searchField.getModelObject();
                 Record record = recordFacade.find(recordString);
-                
+
                 if (record == null) {
                     record = recordFacade.buildFromMaster(recordString);
                     recordFacade.create(record);
@@ -52,16 +50,12 @@ public final class NnumberPage extends WebPage {
                 setModelObject(record);
                 PageParameters pageParameters = new PageParameters();
                 pageParameters.add("nNumber", record.getNnumber());
-                //pageParameters.add("firstName", record.getFirstName());
+
                 setResponsePage(RecordPage.class, pageParameters);
             }
         };
 
         add(searchForm);
         searchForm.add(searchField);
-        
-        Label selectedFormLabel = new Label("selectedRecord", recordModel);
-        add(selectedFormLabel);
-
     }
 }

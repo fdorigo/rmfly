@@ -3,25 +3,16 @@
 <html xmlns:wicket="http://wicket.apache.org">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-        <title>NnumberPage</title>
-        <link rel="stylesheet" type="text/css" href="style.css"/>
+        <title>Select Nnumber</title>
     </head>
     <body>
-        <div>
-
-            <div>
-                <div wicket:id="feedback"></div>
-                <form wicket:id="nNumberForm">
-                    <label>Enter NNumber:
-                        <input wicket:id="nNumber" name="nNumber" type="text"/>
-                    </label>
-                    <br/>
-                    <input type="submit"/>
-                </form>
-            </div>
-
-            <div wicket:id="selectedRecord"> 
-            </div>
-        </div>
+      <wicket:extend>
+        <div wicket:id="feedback"></div>
+          <form wicket:id="nNumberForm">
+            <label>Enter NNumber</label>
+            <input wicket:id="nNumber" name="nNumber" type="text"/>
+            <input type="submit"/>
+          </form>
+      </wicket:extend>
     </body>
 </html>

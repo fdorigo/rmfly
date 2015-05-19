@@ -37,7 +37,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
     @NamedQuery(name = "Record.findByAddressState", query = "SELECT r FROM Record r WHERE r.addressState = :addressState"),
     @NamedQuery(name = "Record.findByAddressZip", query = "SELECT r FROM Record r WHERE r.addressZip = :addressZip"),
     @NamedQuery(name = "Record.findByPrimaryPhone", query = "SELECT r FROM Record r WHERE r.primaryPhone = :primaryPhone"),
-    @NamedQuery(name = "Record.findBySecondaryphone", query = "SELECT r FROM Record r WHERE r.secondaryphone = :secondaryphone"),
+    @NamedQuery(name = "Record.findBySecondaryphone", query = "SELECT r FROM Record r WHERE r.secondaryPhone = :secondaryphone"),
     @NamedQuery(name = "Record.findByEmailAddress", query = "SELECT r FROM Record r WHERE r.emailAddress = :emailAddress"),
     @NamedQuery(name = "Record.findByArrivalDate", query = "SELECT r FROM Record r WHERE r.arrivalDate = :arrivalDate"),
     @NamedQuery(name = "Record.findByAirplaneModel", query = "SELECT r FROM Record r WHERE r.airplaneModel = :airplaneModel"),
@@ -84,7 +84,7 @@ public class Record implements Serializable {
     private String primaryPhone;
     @Size(max = 50)
     @Column(name = "secondaryphone")
-    private String secondaryphone;
+    private String secondaryPhone;
     @Size(max = 50)
     @Column(name = "email_address")
     private String emailAddress;
@@ -201,12 +201,12 @@ public class Record implements Serializable {
         this.primaryPhone = primaryPhone;
     }
 
-    public String getSecondaryphone() {
-        return secondaryphone;
+    public String getSecondaryPhone() {
+        return secondaryPhone;
     }
 
-    public void setSecondaryphone(String secondaryphone) {
-        this.secondaryphone = secondaryphone;
+    public void setSecondaryPhone(String secondaryPhone) {
+        this.secondaryPhone = secondaryPhone;
     }
 
     public String getEmailAddress() {
