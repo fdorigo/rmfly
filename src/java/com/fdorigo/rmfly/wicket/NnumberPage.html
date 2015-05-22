@@ -6,13 +6,13 @@
         <title>Select Nnumber</title>
     </head>
     <body>
-      <wicket:extend>
-        <div wicket:id="feedback"></div>
-          <form wicket:id="nNumberForm">
-            <label>Enter NNumber</label>
-            <input wicket:id="nNumber" name="nNumber" type="text"/>
-            <input type="submit"/>
-          </form>
-      </wicket:extend>
+        <wicket:extend>
+            <div wicket:id="feedback"></div>
+            <form wicket:id="nNumberForm" class="pure-form">
+                <legend>Lookup records by NNumber</legend>
+                <input wicket:id="nNumber" type="text"  placeholder="Enter NNumber"/>
+                <button type="submit" class="pure-button pure-button-primary">Search </button>
+            </form>
+        </wicket:extend>
     </body>
 </html>

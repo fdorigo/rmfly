@@ -44,7 +44,6 @@ public final class NnumberPage extends BasePage {
 
                 if (record == null) {
                     record = recordFacade.buildFromMaster(recordString);
-                    recordFacade.create(record);
                 }
 
                 setModelObject(record);

@@ -12,6 +12,7 @@ import java.util.logging.Logger;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import org.apache.commons.lang3.text.WordUtils;
 
 /**
  *
@@ -41,17 +42,17 @@ public class RecordFacade extends AbstractFacade<Record> {
 
             final Master faaMasterRecord = em.find(Master.class, id);
             if (faaMasterRecord != null) {
-                newRecord.setLastName(faaMasterRecord.getName());
-                newRecord.setAddressCity(faaMasterRecord.getCity());
-                newRecord.setAddressOne(faaMasterRecord.getStreet());
-                newRecord.setAddressTwo(faaMasterRecord.getStreet2());
-                newRecord.setAddressState(faaMasterRecord.getState());
+                newRecord.setLastName(WordUtils.capitalizeFully(faaMasterRecord.getName()));
+                newRecord.setAddressCity(WordUtils.capitalizeFully(faaMasterRecord.getCity()));
+                newRecord.setAddressOne(WordUtils.capitalizeFully(faaMasterRecord.getStreet()));
+                newRecord.setAddressTwo(WordUtils.capitalizeFully(faaMasterRecord.getStreet2()));
+                newRecord.setAddressState(WordUtils.capitalizeFully(faaMasterRecord.getState()));
                 newRecord.setAddressZip(faaMasterRecord.getZip());
 
                 final Acftref faaAircraftRecord = em.find(Acftref.class, faaMasterRecord.getMfrmdlcode());
                 if (faaAircraftRecord != null) {
-                    newRecord.setAirplaneModel(faaAircraftRecord.getModel());
-                    newRecord.setAirplaneMake(faaAircraftRecord.getMfrname());
+                    newRecord.setAirplaneModel(WordUtils.capitalizeFully(faaAircraftRecord.getModel()));
+                    newRecord.setAirplaneMake(WordUtils.capitalizeFully(faaAircraftRecord.getMfrname()));
                 }
             }
         }

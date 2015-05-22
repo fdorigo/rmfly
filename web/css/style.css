@@ -1,9 +1,4 @@
-body {
-    white-space: nowrap;
-}
-
 .content_container {
-    margin-left: 10px;    
 }
 
 .feedbackPanelERROR {
@@ -16,16 +11,5 @@ body {
     color: green;
     list-style: circle;
     font-weight: bold;
-}
-
-.inputForm label {
-    display: block;
-    margin-top: 20px;
-}
-
-#needJudgingRadioChoice label { display: inline !important; }
-
-.inputForm label.non {
-    display: inline !important;
 }
 

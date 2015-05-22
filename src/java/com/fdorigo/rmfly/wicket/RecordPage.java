@@ -11,6 +11,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.extensions.markup.html.form.DateTextField;
 import org.apache.wicket.extensions.yui.calendar.DatePicker;
@@ -26,6 +27,7 @@ import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
+import org.apache.wicket.validation.validator.EmailAddressValidator;
 
 /**
  *
@@ -33,20 +35,42 @@ import org.apache.wicket.request.mapper.parameter.PageParameters;
  */
 public final class RecordPage extends BasePage {
 
-    static final List<Boolean> TRUE_FALSE = Arrays.asList(true, false);
+    private static final Logger LOG = Logger.getLogger(RecordPage.class.getName());
+
+    private static final List<Boolean> TRUE_FALSE = Arrays.asList(true, false);
 
     @EJB(name = "RecordFacade")
     private RecordFacade recordFacade;
 
-    private static final Logger LOG = Logger.getLogger(RecordPage.class.getName());
-
     private Record record = new Record();
+
+    private final Boolean validNnumber;
+
+    public RecordPage() {
+        validNnumber = false;
+        init();
+    }
 
     public RecordPage(PageParameters params) {
 
         final String nNumberString = params.get("nNumber").toString();
-        record = recordFacade.find(nNumberString);
 
+        if (StringUtils.isEmpty(nNumberString)) {
+            validNnumber = false;
+        } else {
+            record = recordFacade.find(nNumberString);
+            if (record != null) {
+                validNnumber = true;
+            }
+            else {
+                validNnumber = false;
+            }
+        }
+
+        init();
+    }
+
+    private void init() {
         add(new FeedbackPanel("feedback"));
 
         final DateTextField dateTextField = new DateTextField("arrivalDate");
@@ -61,15 +85,18 @@ public final class RecordPage extends BasePage {
         datePicker.setShowOnFieldClick(true);
         datePicker.setAutoHide(true);
         dateTextField.add(datePicker);
-        
+
         final TextField<String> nNumberField = new TextField<>("nnumber");
-        nNumberField.add(AttributeModifier.append("readonly", "true"));
+        nNumberField.setRequired(true);
+        if (validNnumber) {
+            nNumberField.add(AttributeModifier.append("readonly", "true"));
+        }
+        else {
+            nNumberField.add(AttributeModifier.append("placeholder", "Not Found"));
+        }
 
         final TextField<String> firstNameField = new TextField<>("firstName");
-        
         final TextField<String> lastNameField = new TextField<>("lastName");
-        
-        
         final TextField<String> primaryPhoneField = new TextField<>("primaryPhone");
         primaryPhoneField.setRequired(true);
         final TextField<String> secondaryPhoneField = new TextField<>("secondaryPhone");
@@ -78,21 +105,17 @@ public final class RecordPage extends BasePage {
         final TextField<String> addressCityField = new TextField<>("addressCity");
         final TextField<String> addressZipField = new TextField<>("addressZip");
         final TextField<String> emailAddressField = new TextField<>("emailAddress");
+        emailAddressField.add(EmailAddressValidator.getInstance());
         final TextField<String> airplaneMakeField = new TextField<>("airplaneMake");
         final TextField<String> airplaneModelField = new TextField<>("airplaneModel");
         final TextField<Integer> manufactureYearField = new TextField<>("manufactureYear");
-        final TextField<String> homebaseField = new TextField<>("homebase");
 
-//        final RadioChoice<Boolean> rc = new RadioChoice<>("needJudging", TRUE_FALSE).setSuffix("");
-//        rc.set
-//        rc.setRequired(true);
-//        rc.add(new AttributeAppender("class", new Model<String>("pure-radio"), " "));
-        RadioGroup<String> group = new RadioGroup<String>("needJudging");
+        RadioGroup<String> group = new RadioGroup<>("needJudging");
         add(group);
         ListView<Boolean> radios = new ListView<Boolean>("radios", TRUE_FALSE) {
             @Override
             protected void populateItem(ListItem<Boolean> item) {
-                Radio<Boolean> radio = new Radio<Boolean>("radio", item.getModel());
+                Radio<Boolean> radio = new Radio<>("radio", item.getModel());
                 radio.setLabel(new Model(item.getModelObject()));
                 item.add(radio);
                 item.add(new SimpleFormComponentLabel("boolval", radio));
@@ -104,8 +127,9 @@ public final class RecordPage extends BasePage {
         Form<Record> recordForm = new Form<Record>("recordForm", new CompoundPropertyModel<>(recordModel)) {
             @Override
             protected void onSubmit() {
-                LOG.info("NNum: " + recordModel.getObject().getNnumber());
-                LOG.info("Frst: " + recordModel.getObject().getFirstName());
+                LOG.info("Saving record: " + record);
+
+                recordFacade.edit(record);
             }
         };
 
@@ -123,44 +147,11 @@ public final class RecordPage extends BasePage {
         recordForm.add(airplaneMakeField);
         recordForm.add(airplaneModelField);
         recordForm.add(manufactureYearField);
-        recordForm.add(homebaseField);
 
         /* Mandatory Fields */
         recordForm.add(new FormComponentFeedbackBorder("arrivalDateBorder").add(dateTextField));
         recordForm.add(new FormComponentFeedbackBorder("primaryPhoneBorder").add(primaryPhoneField));
         recordForm.add(new FormComponentFeedbackBorder("needJudgingBorder").add(group));
-
-//        Label selectedFormLabel = new Label("selectedRecord", recordModel);
-//        add(selectedFormLabel);
-//        
-//        final TextField<String> nNumberField = new TextField<>("nNumberField", Model.of(recordModel.getObject().getNnumber()));
-//        nNumberField.setRequired(true);
-//        Form<Record> recordForm = new Form<Record>("recordForm", new CompoundPropertyModel<Record>(recordModel)) {
-//
-//            @Override
-//            protected void onSubmit() {
-//            }
-//        };
-//
-//        add(recordForm);
-//        recordForm.add(nNumberField);
-//
-//        RecordDataProvider gdp = new RecordDataProvider() {
-//            @Override
-//            public AbstractFacade<Record> getFacade() {
-//                return recordFacade;
-//            }
-//        };
-//
-//        final DataView<Record> recordListView = new DataView<Record>("recordList", gdp) {
-//            @Override
-//            protected void populateItem(Item<Record> item) {
-//
-//                Record record = item.getModelObject();
-//                item.add(new Label("name", record.toString()));
-//            }
-//        };
-//
-//        add(recordListView);
     }
+
 }
