@@ -6,16 +6,20 @@
 package com.fdorigo.rmfly.jpa.entities;
 
 import java.io.Serializable;
+import java.util.Collection;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
@@ -50,6 +54,8 @@ import org.apache.commons.lang3.builder.ToStringStyle;
     @NamedQuery(name = "Record.findByIsJudged", query = "SELECT r FROM Record r WHERE r.isJudged = :isJudged"),
     @NamedQuery(name = "Record.findByCategory", query = "SELECT r FROM Record r WHERE r.category = :category")})
 public class Record implements Serializable {
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "nnumber")
+    private Collection<Score> scoreCollection;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -324,6 +330,15 @@ public class Record implements Serializable {
                 .append("firstName", firstName)
                 .append("lastName", lastName)
                 .toString();
+    }
+
+    @XmlTransient
+    public Collection<Score> getScoreCollection() {
+        return scoreCollection;
+    }
+
+    public void setScoreCollection(Collection<Score> scoreCollection) {
+        this.scoreCollection = scoreCollection;
     }
 
 }

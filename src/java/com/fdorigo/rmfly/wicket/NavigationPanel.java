@@ -32,6 +32,7 @@ public class NavigationPanel extends Panel {
         };
         this.add(movieListPageLink);
 
+        
         Link registerRecord = new Link("register_participant") {
             @Override
             public void onClick() {
@@ -39,5 +40,13 @@ public class NavigationPanel extends Panel {
             }
         };
         this.add(registerRecord);
+
+        Link judgeAirplane = new Link("judge_airplane") {
+            @Override
+            public void onClick() {
+                this.setResponsePage(new ScorePage());
+            }
+        };
+        this.add(judgeAirplane);
     }
 }
