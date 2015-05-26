@@ -16,6 +16,7 @@ import javax.persistence.PersistenceContext;
  */
 @Stateless
 public class ScoreFacade extends AbstractFacade<Score> {
+
     @PersistenceContext(unitName = "AirshowPU")
     private EntityManager em;
 
@@ -27,5 +28,4 @@ public class ScoreFacade extends AbstractFacade<Score> {
     public ScoreFacade() {
         super(Score.class);
     }
-    
 }

@@ -29,34 +29,8 @@ public class HomePage extends BasePage {
     }
 
     private void init() {
-//        LoadableDetachableModel<Record> newRecordDetachableModel = new LoadableDetachableModel<Record>() {
-//            @Override
-//            public Record load() {
-//                return new Record();
-//            }
-//        };
-//
-//        add(new FeedbackPanel("feedback"));
-//
-//        Form<Record> recordForm = new Form<Record>("record_form", new CompoundPropertyModel<>(newRecordDetachableModel)) {
-//
-//            @Override
-//            protected void onSubmit() {
-//                Record record = getModelObject();
-//                recordFacade.create(record);
-//                setModelObject(new Record());
-//                record = new Record();
-//            }
-//        };
-//        add(recordForm);
-//
-//        recordForm
-//                .add(new FormComponentFeedbackBorder("firstNameBorder")
-//                        .add(new NameTextField("firstName")));
-//        recordForm
-//                .add(new FormComponentFeedbackBorder("lastNameBorder")
-//                        .add(new NameTextField("lastName")));
-        
+        recordFacade.lazyRefresh();
+
         RecordDataProvider gdp = new RecordDataProvider() {
 
             @Override
@@ -69,17 +43,33 @@ public class HomePage extends BasePage {
 
             @Override
             protected void populateItem(Item<Record> item) {
+
                 Record record = item.getModelObject();
+
+                Boolean needJudging = false;
+                Integer scoreSize = 0;
+
+                if (record.getNeedJudging() != null) {
+                    needJudging = record.getNeedJudging();
+                }
+
+                if (record.getScoreCollection().isEmpty() == false) {
+                    scoreSize = record.getScoreCollection().size();
+                }
+
                 PageParameters parameters = new PageParameters();
                 parameters.set("nNumber",
                         record.getNnumber());
                 BookmarkablePageLink<Void> pageLink = new BookmarkablePageLink<Void>("pageLinkWithArgs", RecordPage.class, parameters);
-                
-                item.add(pageLink.add(new Label("nnumber", record.getNnumber())));  
+                BookmarkablePageLink<Void> scoreLink = new BookmarkablePageLink<Void>("scoreLinkWithArgs", ScorePage.class, parameters);
+
+                item.add(pageLink.add(new Label("nnumber", record.getNnumber())));
                 item.add(new Label("firstName", record.getFirstName()));
                 item.add(new Label("lastName", record.getLastName()));
+                item.add(scoreLink.add(new Label("score", record.getNnumber())));
+                item.add(new Label("competing", needJudging.toString()));
+                item.add(new Label("judged", scoreSize.toString()));
             }
-
         };
 
         add(recordListView);

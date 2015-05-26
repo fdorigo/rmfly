@@ -5,21 +5,21 @@
  */
 package com.fdorigo.rmfly.wicket;
 
+import com.fdorigo.rmfly.jpa.entities.Record;
 import com.fdorigo.rmfly.jpa.entities.Score;
+import com.fdorigo.rmfly.jps.session.RecordFacade;
 import com.fdorigo.rmfly.jps.session.ScoreFacade;
-import java.util.Arrays;
-import java.util.List;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.wicket.extensions.markup.html.form.DateTextField;
 import org.apache.wicket.extensions.yui.calendar.DatePicker;
-import org.apache.wicket.markup.html.form.DropDownChoice;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.Model;
-import org.apache.wicket.model.PropertyModel;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.validation.validator.RangeValidator;
 
 /**
@@ -34,31 +34,57 @@ public final class ScorePage extends BasePage {
     @SuppressWarnings("unused")
     private static final Logger LOG = Logger.getLogger(ScorePage.class.getName());
 
-    private static final List<String> CATEGORIES = Arrays.asList(new String[]{
-        null, "Vintage", "Warbird", "Homebuilt, Kit", "Homebuilt, Plans", "Light Sport", "Custom/Modern"});
+    @EJB(name = "RecordFacade")
+    private RecordFacade recordFacade;
 
-    private static String selected = "";
+    private Record record = new Record();
+    private Score score = new Score();
+
+    private final Boolean validNnumber;
 
     public ScorePage() {
+        validNnumber = false;
+        init();
+    }
+
+    public ScorePage(PageParameters params) {
+
+        final String nNumberString = params.get("nNumber").toString();
+
+        if (StringUtils.isEmpty(nNumberString)) {
+            validNnumber = false;
+        } else {
+            record = recordFacade.find(nNumberString);
+            if (record != null) {
+                validNnumber = true;
+                score.setNnumber(record);
+                score.setOwnerName(record.getFirstName() + " " + record.getLastName()); 
+                score.setCategory(record.getCategory());
+            } else {
+                validNnumber = false;
+            }
+        }
+        
         init();
     }
 
     private void init() {
         add(new FeedbackPanel("feedback"));
 
-        final DateTextField dateTextField = new DateTextField("dateJudged");
+        final DateTextField dateTextField = new DateTextField("date");
         dateTextField.setRequired(true);
         final DatePicker datePicker = new DatePicker();
         datePicker.setShowOnFieldClick(true);
         datePicker.setAutoHide(true);
         dateTextField.add(datePicker);
 
-        final TextField<String> searchField = new TextField<>("nNumber", Model.of(""));
+        final TextField<String> searchField = new TextField<>("nNumber", Model.of(record.getNnumber()));
         searchField.setRequired(true);
-        final TextField<String> ownerName = new TextField<>("ownerName", Model.of(""));
-        searchField.setRequired(true);
+        final TextField<String> ownerName = new TextField<>("ownerName");
+        ownerName.setRequired(true);
         final TextField<String> judgeName = new TextField<>("judgeName", Model.of(""));
-        searchField.setRequired(true);
+        judgeName.setRequired(true);
+        final TextField<String> category = new TextField<>("category");
 
         // Scoring Fields 
         final TextField<Integer> overall = new TextField<>("scoreOverall", Integer.class);
@@ -80,18 +106,15 @@ public final class ScorePage extends BasePage {
         final TextField<Integer> innovation = new TextField<>("scoreInnovation", Integer.class);
         innovation.add(new RangeValidator<>(1, 10));
 
-        searchField.setRequired(true);
-
-        DropDownChoice<String> listCategories = new DropDownChoice<String>(
-                "category", new PropertyModel<String>(this, "selected"), CATEGORIES);
-
-        Model<Score> scoreModel = new Model<>();
-        Form<Score> searchForm = new Form<Score>("nNumberForm", new CompoundPropertyModel<>(scoreModel)) {
+        Model<Score> scoreModel = new Model<>(score);
+        Form<Score> searchForm = new Form<Score>("scoreForm", new CompoundPropertyModel<>(scoreModel)) {
 
             @Override
             protected void onSubmit() {
                 final String scoreString = searchField.getModelObject();
                 LOG.info(scoreString);
+                scoreFacade.edit(score);
+                setResponsePage(HomePage.class);
             }
         };
 
@@ -100,7 +123,7 @@ public final class ScorePage extends BasePage {
         searchForm.add(ownerName);
         searchForm.add(judgeName);
         searchForm.add(searchField);
-        searchForm.add(listCategories);
+        searchForm.add(category);
         searchForm.add(overall);
         searchForm.add(fuselage);
         searchForm.add(lifts);

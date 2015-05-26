@@ -8,68 +8,92 @@
     <body>
         <wicket:extend>
             <div wicket:id="feedback"></div>
-            <form wicket:id="nNumberForm" class="pure-form">
-                <legend>NNumber</legend>
-                <input wicket:id="nNumber" type="text" readonly="true"/>
 
-                <legend>Date Judged</legend>
-                <input wicket:id="dateJudged" type="text" />
+            <form wicket:id="scoreForm" class="pure-form pure-form-stacked">
+                <fieldset>
+                    <legend>Add judge scores</legend>
+                    <div class="pure-g">
 
-                <legend>Owner Name</legend>
-                <input wicket:id="ownerName" type="text" />
-
-                <legend>Judge Name</legend>
-                <input wicket:id="judgeName" type="text" />
-
-                <legend>Category</legend>
-                <select wicket:id="category"/>
-
-                <div class="pure-g">
-                    <div class="pure-u-1-3">
-                        <div class="pure-u-7-24">
-                            <legend>Fuselage</legend>
-                            <input wicket:id="scoreFuselage" type="text" class="pure-u-13-24" />
+                        <div class="pure-u-1-3">
+                            <label>NNumber</label>
+                            <input wicket:id="nNumber" type="text" readonly="true" />
                         </div>
-                        <div class="pure-u-8-24">
-                            <legend>Lift</legend>
-                            <input wicket:id="scoreLifts" type="text" class="pure-u-12-24" />
+
+                        <div class="pure-u-1-3">
+                            <label>Owner Name</label>
+                            <input wicket:id="ownerName" type="text" readonly="true" />
                         </div>
-                        <div class="pure-u-8-24">
-                            <legend>Pitch</legend>
-                            <input wicket:id="scorePitch" type="text" class="pure-u-12-24" />
+
+                        <div class="pure-u-1-3">
+                            <label>Category</label>
+                            <input wicket:id="category" type="text" readonly="true"/>
                         </div>
-                    </div>
-                    <div class="pure-u-1-3">
-                        <div class="pure-u-7-24">
-                            <legend>Landing</legend>
-                            <input wicket:id="scoreLanding" type="text" class="pure-u-13-24" />
+
+                        <div class="pure-u-1-3">
+                            <label>Date Judged</label>
+                            <input wicket:id="date" type="text" />
+                        </div>
+
+                        <div class="pure-u-2-3">
+                            <label>Judge Name</label>
+                            <input wicket:id="judgeName" type="text" class="pure-u-21-24" />
+                        </div>
+
+
+                        <div class="pure-u-1-3">
+                            <div class="pure-u-7-24">
+                                <label>Fuselage</label>
+                                <input wicket:id="scoreFuselage" type="text" class="pure-u-13-24" />
+                            </div>
+                            <div class="pure-u-8-24">
+                                <label>Lift</label>
+                                <input wicket:id="scoreLifts" type="text" class="pure-u-12-24" />
+                            </div>
+                            <div class="pure-u-8-24">
+                                <label>Pitch</label>
+                                <input wicket:id="scorePitch" type="text" class="pure-u-12-24" />
+                            </div>
                         </div>
                         <div class="pure-u-1-3">
-                            <legend>Cockpit</legend>
-                            <input wicket:id="scoreCockpit" type="text" class="pure-u-12-24" />
+                            <div class="pure-u-7-24">
+                                <label>Landing</label>
+                                <input wicket:id="scoreLanding" type="text" class="pure-u-13-24" />
+                            </div>
+                            <div class="pure-u-1-3">
+                                <label>Cockpit</label>
+                                <input wicket:id="scoreCockpit" type="text" class="pure-u-12-24" />
+                            </div>
+                            <div class="pure-u-1-3">
+                                <label>Power</label>
+                                <input wicket:id="scorePower" type="text" class="pure-u-12-24" />
+                            </div>
                         </div>
                         <div class="pure-u-1-3">
-                            <legend>Power</legend>
-                            <input wicket:id="scorePower" type="text" class="pure-u-12-24" />
+                            <div class="pure-u-7-24">
+                                <label>Finish</label>
+                                <input wicket:id="scoreFinish" type="text" class="pure-u-13-24" />
+                            </div>
+                            <div class="pure-u-8-24">
+                                <label>Innovation</label>
+                                <input wicket:id="scoreInnovation" type="text" class="pure-u-12-24" />
+                            </div>
+                            <div class="pure-u-8-24">
+                                <label>Overall</label>
+                                <input wicket:id="scoreOverall" type="text" class="pure-u-12-24"/>
+                            </div>
                         </div>
                     </div>
-                    <div class="pure-u-1-3">
-                        <div class="pure-u-7-24">
-                            <legend>Finish</legend>
-                            <input wicket:id="scoreFinish" type="text" class="pure-u-13-24" />
-                        </div>
-                        <div class="pure-u-8-24">
-                            <legend>Innovation</legend>
-                            <input wicket:id="scoreInnovation" type="text" class="pure-u-12-24" />
-                        </div>
-                        <div class="pure-u-8-24">
-                            <legend>Overall</legend>
-                            <input wicket:id="scoreOverall" type="text" class="pure-u-12-24"/>
-                        </div>
+
+                    <div class="pure-u-1 pure-u-md-1-3">
+                        &nbsp;
                     </div>
-                </div>
-                <br />
-                <button type="submit" class="pure-button pure-button-primary">Judge</button>
+                    <div class="pure-u-1 pure-u-md-1-3">
+                        <button type="submit" class="pure-button pure-button-primary pure-input-1" style=" margin-top: 30px;">
+                            <i class="fa fa-floppy-o"></i>
+                            Save
+                        </button>
+                    </div>  
+                </fieldset>
             </form>
         </wicket:extend>
     </body>

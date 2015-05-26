@@ -10,11 +10,31 @@ package com.fdorigo.rmfly.wicket.components;
  * @author fdorigo
  */
 public enum AirplaneType {
+    VINTAGE(1,"Vintage"),
+    WARBIRD(2,"Warbird"),
+    HOMEKIT(3,"Homenuilt, Kit"),
+    HOMEPLANS(4,"Homenuilt, Plans"),
+    LIGHTSPORT(5,"Light Sport"),
+    CUSTOM(6,"Custom/Modern");
     
-//    private static final List<String> CATEGORIES = Arrays.asList(new String[]{
-//        null, "Vintage", "Warbird", "Homebuilt, Kit", "Homebuilt, Plans", "Light Sport", "Custom/Modern"});
     
+    private Integer value;
+    private String name;
+    AirplaneType(Integer value, String name)
+    {
+        this.value = value;
+        this.name = name;
+    }
     
+    public String getByType()
+    {
+        return this.name;
+    }
 
+    @Override
+    public String toString() {
+        return this.name;
+    }
+    
     
 }

@@ -9,7 +9,7 @@ import com.fdorigo.rmfly.jpa.entities.Record;
 import java.util.Iterator;
 import java.util.List;
 import org.apache.wicket.model.IModel;
-import org.apache.wicket.model.LoadableDetachableModel;
+import org.apache.wicket.model.LoadableDetachableModel; 
 
 /**
  *
@@ -32,11 +32,6 @@ public abstract class RecordDataProvider implements IEjbDataProvider<Record> {
         LoadableDetachableModel<Record> ldm = new LoadableDetachableModel<Record>(object) {
             @Override
             protected Record load() {
-                if (getFacade().find(id) == null)
-                {
-                    
-                }
-                
                 return getFacade().find(id);
             }
         };

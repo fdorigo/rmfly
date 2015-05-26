@@ -11,6 +11,7 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -54,7 +55,10 @@ import org.apache.commons.lang3.builder.ToStringStyle;
     @NamedQuery(name = "Record.findByIsJudged", query = "SELECT r FROM Record r WHERE r.isJudged = :isJudged"),
     @NamedQuery(name = "Record.findByCategory", query = "SELECT r FROM Record r WHERE r.category = :category")})
 public class Record implements Serializable {
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "nnumber")
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "nnumber", fetch = FetchType.EAGER)
+//    @ElementCollection
+//    @CollectionTable(name = "score", joinColumns = @JoinColumn(name = "nnumber"))
     private Collection<Score> scoreCollection;
 
     private static final long serialVersionUID = 1L;

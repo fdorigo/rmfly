@@ -8,12 +8,15 @@ package com.fdorigo.rmfly.jpa.entities;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -37,9 +40,30 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Score.findByDate", query = "SELECT s FROM Score s WHERE s.date = :date"),
     @NamedQuery(name = "Score.findByOwnerName", query = "SELECT s FROM Score s WHERE s.ownerName = :ownerName"),
     @NamedQuery(name = "Score.findByJudgeName", query = "SELECT s FROM Score s WHERE s.judgeName = :judgeName"),
-    @NamedQuery(name = "Score.findByCategory", query = "SELECT s FROM Score s WHERE s.category = :category"),
-    @NamedQuery(name = "Score.findByScore1", query = "SELECT s FROM Score s WHERE s.score1 = :score1")})
+    @NamedQuery(name = "Score.findByCategory", query = "SELECT s FROM Score s WHERE s.category = :category")})
 public class Score implements Serializable {
+    @Column(name = "scoreOverall")
+    private Short scoreOverall;
+    @Column(name = "scoreFuselage")
+    private Short scoreFuselage;
+    @Column(name = "scoreLifts")
+    private Short scoreLifts;
+    @Column(name = "scorePitch")
+    private Short scorePitch;
+    @Column(name = "scoreLanding")
+    private Short scoreLanding;
+    @Column(name = "scoreCockpit")
+    private Short scoreCockpit;
+    @Column(name = "scorePower")
+    private Short scorePower;
+    @Column(name = "scoreFinish")
+    private Integer scoreFinish;
+    @Column(name = "scoreInnovation")
+    private Integer scoreInnovation;
+    @Lob
+    @Size(max = 65535)
+    @Column(name = "judgeNotes")
+    private String judgeNotes;
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -60,10 +84,8 @@ public class Score implements Serializable {
     @Size(max = 50)
     @Column(name = "category")
     private String category;
-    @Column(name = "score_1")
-    private Integer score1;
     @JoinColumn(name = "nnumber", referencedColumnName = "nnumber")
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Record nnumber;
 
     public Score() {
@@ -118,14 +140,6 @@ public class Score implements Serializable {
         this.category = category;
     }
 
-    public Integer getScore1() {
-        return score1;
-    }
-
-    public void setScore1(Integer score1) {
-        this.score1 = score1;
-    }
-
     public Record getNnumber() {
         return nnumber;
     }
@@ -157,6 +171,86 @@ public class Score implements Serializable {
     @Override
     public String toString() {
         return "com.fdorigo.rmfly.jpa.entities.Score[ id=" + id + " ]";
+    }
+
+    public Short getScoreOverall() {
+        return scoreOverall;
+    }
+
+    public void setScoreOverall(Short scoreOverall) {
+        this.scoreOverall = scoreOverall;
+    }
+
+    public Short getScoreFuselage() {
+        return scoreFuselage;
+    }
+
+    public void setScoreFuselage(Short scoreFuselage) {
+        this.scoreFuselage = scoreFuselage;
+    }
+
+    public Short getScoreLifts() {
+        return scoreLifts;
+    }
+
+    public void setScoreLifts(Short scoreLifts) {
+        this.scoreLifts = scoreLifts;
+    }
+
+    public Short getScorePitch() {
+        return scorePitch;
+    }
+
+    public void setScorePitch(Short scorePitch) {
+        this.scorePitch = scorePitch;
+    }
+
+    public Short getScoreLanding() {
+        return scoreLanding;
+    }
+
+    public void setScoreLanding(Short scoreLanding) {
+        this.scoreLanding = scoreLanding;
+    }
+
+    public Short getScoreCockpit() {
+        return scoreCockpit;
+    }
+
+    public void setScoreCockpit(Short scoreCockpit) {
+        this.scoreCockpit = scoreCockpit;
+    }
+
+    public Short getScorePower() {
+        return scorePower;
+    }
+
+    public void setScorePower(Short scorePower) {
+        this.scorePower = scorePower;
+    }
+
+    public Integer getScoreFinish() {
+        return scoreFinish;
+    }
+
+    public void setScoreFinish(Integer scoreFinish) {
+        this.scoreFinish = scoreFinish;
+    }
+
+    public Integer getScoreInnovation() {
+        return scoreInnovation;
+    }
+
+    public void setScoreInnovation(Integer scoreInnovation) {
+        this.scoreInnovation = scoreInnovation;
+    }
+
+    public String getJudgeNotes() {
+        return judgeNotes;
+    }
+
+    public void setJudgeNotes(String judgeNotes) {
+        this.judgeNotes = judgeNotes;
     }
     
 }

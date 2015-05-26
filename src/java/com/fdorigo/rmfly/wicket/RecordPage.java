@@ -7,6 +7,7 @@ package com.fdorigo.rmfly.wicket;
 
 import com.fdorigo.rmfly.jpa.entities.Record;
 import com.fdorigo.rmfly.jps.session.RecordFacade;
+import com.fdorigo.rmfly.wicket.components.AirplaneType;
 import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Logger;
@@ -15,12 +16,12 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.extensions.markup.html.form.DateTextField;
 import org.apache.wicket.extensions.yui.calendar.DatePicker;
+import org.apache.wicket.markup.html.form.DropDownChoice;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.Radio;
 import org.apache.wicket.markup.html.form.RadioGroup;
 import org.apache.wicket.markup.html.form.SimpleFormComponentLabel;
 import org.apache.wicket.markup.html.form.TextField;
-import org.apache.wicket.markup.html.form.validation.FormComponentFeedbackBorder;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
@@ -38,6 +39,9 @@ public final class RecordPage extends BasePage {
     private static final Logger LOG = Logger.getLogger(RecordPage.class.getName());
 
     private static final List<Boolean> TRUE_FALSE = Arrays.asList(true, false);
+
+    private static final List<String> CATEGORIES = Arrays.asList(new String[]{
+        null, "Vintage", "Warbird", "Homebuilt, Kit", "Homebuilt, Plans", "Light Sport", "Custom/Modern"});
 
     @EJB(name = "RecordFacade")
     private RecordFacade recordFacade;
@@ -61,9 +65,9 @@ public final class RecordPage extends BasePage {
             record = recordFacade.find(nNumberString);
             if (record != null) {
                 validNnumber = true;
-            }
-            else {
+            } else {
                 validNnumber = false;
+                record = new Record();
             }
         }
 
@@ -90,10 +94,12 @@ public final class RecordPage extends BasePage {
         nNumberField.setRequired(true);
         if (validNnumber) {
             nNumberField.add(AttributeModifier.append("readonly", "true"));
-        }
-        else {
+        } else {
             nNumberField.add(AttributeModifier.append("placeholder", "Not Found"));
         }
+
+        DropDownChoice<AirplaneType> listCategories = new DropDownChoice<>(
+                "category", Arrays.asList(AirplaneType.values()));
 
         final TextField<String> firstNameField = new TextField<>("firstName");
         final TextField<String> lastNameField = new TextField<>("lastName");
@@ -149,9 +155,14 @@ public final class RecordPage extends BasePage {
         recordForm.add(manufactureYearField);
 
         /* Mandatory Fields */
-        recordForm.add(new FormComponentFeedbackBorder("arrivalDateBorder").add(dateTextField));
-        recordForm.add(new FormComponentFeedbackBorder("primaryPhoneBorder").add(primaryPhoneField));
-        recordForm.add(new FormComponentFeedbackBorder("needJudgingBorder").add(group));
+        recordForm.add(dateTextField);
+        recordForm.add(primaryPhoneField);
+        recordForm.add(group);
+        recordForm.add(listCategories);
+//        recordForm.add(new FormComponentFeedbackBorder("arrivalDateBorder").add(dateTextField));
+//        recordForm.add(new FormComponentFeedbackBorder("primaryPhoneBorder").add(primaryPhoneField));
+//        recordForm.add(new FormComponentFeedbackBorder("needJudgingBorder").add(group));
+//        recordForm.add(new FormComponentFeedbackBorder("categoryBorder").add(listCategories));
     }
 
 }

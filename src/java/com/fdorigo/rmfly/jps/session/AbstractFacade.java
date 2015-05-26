@@ -22,6 +22,10 @@ public abstract class AbstractFacade<T> {
 
     protected abstract EntityManager getEntityManager();
 
+    public void lazyRefresh() {
+        getEntityManager().getEntityManagerFactory().getCache().evictAll();
+    }
+    
     public void create(T entity) {
         getEntityManager().persist(entity);
     }
@@ -35,6 +39,7 @@ public abstract class AbstractFacade<T> {
     }
 
     public T find(Object id) {
+        getEntityManager().flush();
         return getEntityManager().find(entityClass, id);
     }
     private static final Logger LOG = Logger.getLogger(AbstractFacade.class.getName());
