@@ -6,7 +6,7 @@
 package com.fdorigo.rmfly.wicket;
 
 import com.fdorigo.rmfly.jpa.entities.Record;
-import com.fdorigo.rmfly.jps.session.RecordFacade;
+import com.fdorigo.rmfly.jpa.session.RecordFacade;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
 import org.apache.wicket.markup.html.form.Form;

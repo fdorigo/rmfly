@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.fdorigo.rmfly.jps.session;
+package com.fdorigo.rmfly.jpa.session;
 
 import java.util.List;
 import java.util.logging.Logger;

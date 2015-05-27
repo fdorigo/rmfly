@@ -18,23 +18,29 @@ public enum AirplaneType {
     CUSTOM(6,"Custom/Modern");
     
     
-    private Integer value;
-    private String name;
-    AirplaneType(Integer value, String name)
+    private final Integer value;
+    private final String name;
+    
+    AirplaneType(final Integer value, final String name)
     {
         this.value = value;
         this.name = name;
     }
     
-    public String getByType()
-    {
-        return this.name;
-    }
-
     @Override
     public String toString() {
         return this.name;
     }
     
+    public static AirplaneType fromString(String text) {
+    if (text != null) {
+      for (AirplaneType b : AirplaneType.values()) {
+        if (text.equalsIgnoreCase(b.name)) {
+          return b;
+        }
+      }
+    }
+    return null;
+  }
     
 }

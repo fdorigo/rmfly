@@ -5,7 +5,7 @@
  */
 package com.fdorigo.rmfly.wicket.dataproviders;
 
-import com.fdorigo.rmfly.jps.session.AbstractFacade;
+import com.fdorigo.rmfly.jpa.session.AbstractFacade;
 import org.apache.wicket.markup.repeater.data.IDataProvider;
 
 /**

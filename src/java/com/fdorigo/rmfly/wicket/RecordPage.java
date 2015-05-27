@@ -6,7 +6,7 @@
 package com.fdorigo.rmfly.wicket;
 
 import com.fdorigo.rmfly.jpa.entities.Record;
-import com.fdorigo.rmfly.jps.session.RecordFacade;
+import com.fdorigo.rmfly.jpa.session.RecordFacade;
 import com.fdorigo.rmfly.wicket.components.AirplaneType;
 import java.util.Arrays;
 import java.util.List;
@@ -27,6 +27,7 @@ import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.validation.validator.EmailAddressValidator;
 
@@ -40,13 +41,12 @@ public final class RecordPage extends BasePage {
 
     private static final List<Boolean> TRUE_FALSE = Arrays.asList(true, false);
 
-    private static final List<String> CATEGORIES = Arrays.asList(new String[]{
-        null, "Vintage", "Warbird", "Homebuilt, Kit", "Homebuilt, Plans", "Light Sport", "Custom/Modern"});
-
     @EJB(name = "RecordFacade")
     private RecordFacade recordFacade;
 
     private Record record = new Record();
+
+    private AirplaneType selected = null;
 
     private final Boolean validNnumber;
 
@@ -65,6 +65,9 @@ public final class RecordPage extends BasePage {
             record = recordFacade.find(nNumberString);
             if (record != null) {
                 validNnumber = true;
+                if (record.getCategory() != null) {
+                    selected = AirplaneType.fromString(record.getCategory());
+                }
             } else {
                 validNnumber = false;
                 record = new Record();
@@ -98,8 +101,8 @@ public final class RecordPage extends BasePage {
             nNumberField.add(AttributeModifier.append("placeholder", "Not Found"));
         }
 
-        DropDownChoice<AirplaneType> listCategories = new DropDownChoice<>(
-                "category", Arrays.asList(AirplaneType.values()));
+        DropDownChoice<AirplaneType> listCategories = new DropDownChoice<AirplaneType>(
+                "category", new PropertyModel<>(this, "selected"), Arrays.asList(AirplaneType.values()));
 
         final TextField<String> firstNameField = new TextField<>("firstName");
         final TextField<String> lastNameField = new TextField<>("lastName");
@@ -129,12 +132,12 @@ public final class RecordPage extends BasePage {
         }.setReuseItems(true);
         group.add(radios);
 
-        Model<Record> recordModel = new Model<Record>(record);
+        Model<Record> recordModel = new Model<>(record);
         Form<Record> recordForm = new Form<Record>("recordForm", new CompoundPropertyModel<>(recordModel)) {
             @Override
             protected void onSubmit() {
                 LOG.info("Saving record: " + record);
-
+                record.setCategory(selected.toString());
                 recordFacade.edit(record);
             }
         };

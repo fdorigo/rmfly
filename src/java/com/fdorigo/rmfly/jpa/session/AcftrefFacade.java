@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.fdorigo.rmfly.jps.session;
+package com.fdorigo.rmfly.jpa.session;
 
-import com.fdorigo.rmfly.jpa.entities.Master;
+import com.fdorigo.rmfly.jpa.entities.Acftref;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -15,7 +15,7 @@ import javax.persistence.PersistenceContext;
  * @author fdorigo
  */
 @Stateless
-public class MasterFacade extends AbstractFacade<Master> {
+public class AcftrefFacade extends AbstractFacade<Acftref> {
     @PersistenceContext(unitName = "AirshowPU")
     private EntityManager em;
 
@@ -24,8 +24,8 @@ public class MasterFacade extends AbstractFacade<Master> {
         return em;
     }
 
-    public MasterFacade() {
-        super(Master.class);
+    public AcftrefFacade() {
+        super(Acftref.class);
     }
     
 }

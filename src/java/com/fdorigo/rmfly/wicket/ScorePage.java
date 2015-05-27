@@ -7,8 +7,8 @@ package com.fdorigo.rmfly.wicket;
 
 import com.fdorigo.rmfly.jpa.entities.Record;
 import com.fdorigo.rmfly.jpa.entities.Score;
-import com.fdorigo.rmfly.jps.session.RecordFacade;
-import com.fdorigo.rmfly.jps.session.ScoreFacade;
+import com.fdorigo.rmfly.jpa.session.RecordFacade;
+import com.fdorigo.rmfly.jpa.session.ScoreFacade;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
 import org.apache.commons.lang3.StringUtils;

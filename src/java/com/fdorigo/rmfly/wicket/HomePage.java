@@ -6,8 +6,8 @@
 package com.fdorigo.rmfly.wicket;
 
 import com.fdorigo.rmfly.jpa.entities.Record;
-import com.fdorigo.rmfly.jps.session.AbstractFacade;
-import com.fdorigo.rmfly.jps.session.RecordFacade;
+import com.fdorigo.rmfly.jpa.session.AbstractFacade;
+import com.fdorigo.rmfly.jpa.session.RecordFacade;
 import com.fdorigo.rmfly.wicket.dataproviders.RecordDataProvider;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
@@ -30,6 +30,9 @@ public class HomePage extends BasePage {
 
     private void init() {
         recordFacade.lazyRefresh();
+        
+        Label counter = new Label("totalRegistered", ""+recordFacade.count());
+        add(counter);
 
         RecordDataProvider gdp = new RecordDataProvider() {
 

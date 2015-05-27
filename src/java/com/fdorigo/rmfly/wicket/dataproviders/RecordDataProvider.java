@@ -26,16 +26,13 @@ public abstract class RecordDataProvider implements IEjbDataProvider<Record> {
 
     @Override
     public IModel<Record> model(final Record object) {
-
         final String id = object.getNnumber();
-
         LoadableDetachableModel<Record> ldm = new LoadableDetachableModel<Record>(object) {
             @Override
             protected Record load() {
                 return getFacade().find(id);
             }
         };
-
         return ldm;
     }
 
@@ -47,5 +44,4 @@ public abstract class RecordDataProvider implements IEjbDataProvider<Record> {
     @Override
     public void detach() {
     }
-
 }
