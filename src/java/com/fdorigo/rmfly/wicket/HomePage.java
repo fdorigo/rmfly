@@ -9,12 +9,14 @@ import com.fdorigo.rmfly.jpa.entities.Record;
 import com.fdorigo.rmfly.jpa.session.AbstractFacade;
 import com.fdorigo.rmfly.jpa.session.RecordFacade;
 import com.fdorigo.rmfly.wicket.dataproviders.RecordDataProvider;
+import java.util.List;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 import org.apache.wicket.markup.repeater.Item;
 import org.apache.wicket.markup.repeater.data.DataView;
+import org.apache.wicket.model.Model;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 
 public class HomePage extends BasePage {
@@ -30,9 +32,20 @@ public class HomePage extends BasePage {
 
     private void init() {
         recordFacade.lazyRefresh();
+        List<Record> recordList = recordFacade.findAll();
         
-        Label counter = new Label("totalRegistered", ""+recordFacade.count());
-        add(counter);
+        Integer competingCount = 0;
+        for (Record r : recordList)
+        {
+            if (r.getNeedJudging() != null && r.getNeedJudging() == true)
+            {
+                competingCount++;
+            }
+        }
+        
+        
+        add(new Label("totalRegistered", Model.of(recordList.size())));
+        add(new Label("totalCompeting", Model.of(competingCount)));
 
         RecordDataProvider gdp = new RecordDataProvider() {
 
