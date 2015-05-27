@@ -9,6 +9,8 @@ import com.fdorigo.rmfly.jpa.entities.Record;
 import com.fdorigo.rmfly.jpa.session.AbstractFacade;
 import com.fdorigo.rmfly.jpa.session.RecordFacade;
 import com.fdorigo.rmfly.wicket.dataproviders.RecordDataProvider;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
@@ -33,21 +35,32 @@ public class HomePage extends BasePage {
     private void init() {
         recordFacade.lazyRefresh();
         List<Record> recordList = recordFacade.findAll();
-        
+
         Integer competingCount = 0;
-        for (Record r : recordList)
-        {
-            if (r.getNeedJudging() != null && r.getNeedJudging() == true)
-            {
+        for (Record r : recordList) {
+            if (r.getNeedJudging() != null && r.getNeedJudging() == true) {
                 competingCount++;
             }
         }
-        
-        
+
         add(new Label("totalRegistered", Model.of(recordList.size())));
         add(new Label("totalCompeting", Model.of(competingCount)));
 
         RecordDataProvider gdp = new RecordDataProvider() {
+            @Override
+            public Iterator<? extends Record> iterator(long first, long count) {
+                int[] range = {(int) first, (int) count};
+                List<Record> records = getFacade().findRange(range);
+                List<Record> judgeableRecords = new ArrayList<>();
+//
+//                for (Record r : records) {
+//                    if (r.getNeedJudging() != null && r.getNeedJudging() == false) {
+//                        judgeableRecords.add(r);
+//                    }
+//                }
+//                return judgeableRecords.iterator();
+                return records.iterator();
+            }
 
             @Override
             public AbstractFacade<Record> getFacade() {
@@ -76,10 +89,10 @@ public class HomePage extends BasePage {
                 PageParameters parameters = new PageParameters();
                 parameters.set("nNumber",
                         record.getNnumber());
-                BookmarkablePageLink<Void> pageLink = new BookmarkablePageLink<Void>("pageLinkWithArgs", RecordPage.class, parameters);
-                BookmarkablePageLink<Void> scoreLink = new BookmarkablePageLink<Void>("scoreLinkWithArgs", ScorePage.class, parameters);
+                BookmarkablePageLink<Void> pageLink = new BookmarkablePageLink<>("pageLinkWithArgs", RecordPage.class, parameters);
+                BookmarkablePageLink<Void> scoreLink = new BookmarkablePageLink<>("scoreLinkWithArgs", ScorePage.class, parameters);
 
-                item.add(pageLink.add(new Label("nnumber", record.getNnumber())));
+                item.add(pageLink.add(new Label("nnumber", "edit")));
                 item.add(new Label("firstName", record.getFirstName()));
                 item.add(new Label("lastName", record.getLastName()));
                 item.add(scoreLink.add(new Label("score", record.getNnumber())));

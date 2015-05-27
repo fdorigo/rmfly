@@ -103,6 +103,7 @@ public final class RecordPage extends BasePage {
 
         DropDownChoice<AirplaneType> listCategories = new DropDownChoice<AirplaneType>(
                 "category", new PropertyModel<>(this, "selected"), Arrays.asList(AirplaneType.values()));
+        listCategories.setRequired(true);
 
         final TextField<String> firstNameField = new TextField<>("firstName");
         final TextField<String> lastNameField = new TextField<>("lastName");
@@ -120,6 +121,7 @@ public final class RecordPage extends BasePage {
         final TextField<Integer> manufactureYearField = new TextField<>("manufactureYear");
 
         RadioGroup<String> group = new RadioGroup<>("needJudging");
+        group.setRequired(true);
         add(group);
         ListView<Boolean> radios = new ListView<Boolean>("radios", TRUE_FALSE) {
             @Override
