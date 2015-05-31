@@ -44,8 +44,11 @@ public final class NnumberPage extends BasePage {
 
                 if (record == null) {
                     record = recordFacade.buildFromMaster(recordString);
+                    recordFacade.create(record);
                 }
 
+                LOG.info("Record so far: " + record);
+                
                 setModelObject(record);
                 PageParameters pageParameters = new PageParameters();
                 pageParameters.add("nNumber", record.getNnumber());

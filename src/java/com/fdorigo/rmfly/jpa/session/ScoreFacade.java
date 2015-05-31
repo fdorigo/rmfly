@@ -5,10 +5,13 @@
  */
 package com.fdorigo.rmfly.jpa.session;
 
+import com.fdorigo.rmfly.jpa.entities.Record;
 import com.fdorigo.rmfly.jpa.entities.Score;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 
 /**
  *
@@ -28,4 +31,13 @@ public class ScoreFacade extends AbstractFacade<Score> {
     public ScoreFacade() {
         super(Score.class);
     }
+
+    public List<Score> getScoresByNnumber(Record nnumber) {
+        TypedQuery<Score> query
+                = em.createNamedQuery("Score.findByNnumber", Score.class);
+        query.setParameter("nnumber", nnumber);
+        List<Score> results = query.getResultList();
+        return results;
+    }
+
 }

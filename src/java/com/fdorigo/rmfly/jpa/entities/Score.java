@@ -37,6 +37,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Score.findAll", query = "SELECT s FROM Score s"),
     @NamedQuery(name = "Score.findById", query = "SELECT s FROM Score s WHERE s.id = :id"),
+    @NamedQuery(name = "Score.findByNnumber", query = "SELECT s FROM Score s WHERE s.nnumber = :nnumber"),
     @NamedQuery(name = "Score.findByDate", query = "SELECT s FROM Score s WHERE s.date = :date"),
     @NamedQuery(name = "Score.findByOwnerName", query = "SELECT s FROM Score s WHERE s.ownerName = :ownerName"),
     @NamedQuery(name = "Score.findByJudgeName", query = "SELECT s FROM Score s WHERE s.judgeName = :judgeName"),
@@ -147,7 +148,7 @@ public class Score implements Serializable {
     public void setNnumber(Record nnumber) {
         this.nnumber = nnumber;
     }
-
+    
     @Override
     public int hashCode() {
         int hash = 0;

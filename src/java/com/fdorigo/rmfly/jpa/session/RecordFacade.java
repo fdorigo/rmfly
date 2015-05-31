@@ -12,6 +12,7 @@ import java.util.logging.Logger;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.text.WordUtils;
 
 /**
@@ -42,12 +43,12 @@ public class RecordFacade extends AbstractFacade<Record> {
 
             final Master faaMasterRecord = em.find(Master.class, id);
             if (faaMasterRecord != null) {
-                newRecord.setLastName(WordUtils.capitalizeFully(faaMasterRecord.getName()));
-                newRecord.setAddressCity(WordUtils.capitalizeFully(faaMasterRecord.getCity()));
-                newRecord.setAddressOne(WordUtils.capitalizeFully(faaMasterRecord.getStreet()));
-                newRecord.setAddressTwo(WordUtils.capitalizeFully(faaMasterRecord.getStreet2()));
-                newRecord.setAddressState(WordUtils.capitalizeFully(faaMasterRecord.getState()));
-                newRecord.setAddressZip(faaMasterRecord.getZip());
+                newRecord.setLastName(WordUtils.capitalizeFully(StringUtils.trim(faaMasterRecord.getName())));
+                newRecord.setAddressCity(WordUtils.capitalizeFully(StringUtils.trim(faaMasterRecord.getCity())));
+                newRecord.setAddressOne(WordUtils.capitalizeFully(StringUtils.trim(faaMasterRecord.getStreet())));
+                newRecord.setAddressTwo(WordUtils.capitalizeFully(StringUtils.trim(faaMasterRecord.getStreet2())));
+                newRecord.setAddressState(WordUtils.capitalizeFully(StringUtils.trim(faaMasterRecord.getState())));
+                newRecord.setAddressZip(StringUtils.trim(faaMasterRecord.getZip()));
 
                 final Acftref faaAircraftRecord = em.find(Acftref.class, faaMasterRecord.getMfrmdlcode());
                 if (faaAircraftRecord != null) {

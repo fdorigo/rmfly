@@ -24,6 +24,14 @@ public class NavigationPanel extends Panel {
         };
         this.add(homePageLink);
 
+        Link competingPageLink = new Link("competing") {
+            @Override
+            public void onClick() {
+                this.setResponsePage(new CompetingPage());
+            }
+        };
+        this.add(competingPageLink);
+
         Link movieListPageLink = new Link("search_nnumber") {
             @Override
             public void onClick() {

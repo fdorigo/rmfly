@@ -307,6 +307,10 @@ public class Record implements Serializable {
         this.category = category;
     }
 
+    public String getOwnerName() {
+        return this.firstName + " " + this.lastName;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;

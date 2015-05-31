@@ -82,7 +82,7 @@ public final class ScorePage extends BasePage {
         searchField.setRequired(true);
         final TextField<String> ownerName = new TextField<>("ownerName");
         ownerName.setRequired(true);
-        final TextField<String> judgeName = new TextField<>("judgeName", Model.of(""));
+        final TextField<String> judgeName = new TextField<>("judgeName");
         judgeName.setRequired(true);
         final TextField<String> category = new TextField<>("category");
 
