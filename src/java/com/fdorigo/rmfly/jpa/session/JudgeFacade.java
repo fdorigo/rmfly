@@ -6,6 +6,8 @@
 package com.fdorigo.rmfly.jpa.session;
 
 import com.fdorigo.rmfly.jpa.entities.Judge;
+import java.util.ArrayList;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -23,6 +25,17 @@ public class JudgeFacade extends AbstractFacade<Judge> {
     @Override
     protected EntityManager getEntityManager() {
         return em;
+    }
+
+    public List<String> getAllNames() {
+        List<Judge> judges = findAll();
+        List<String> names = new ArrayList<>();
+
+        judges.stream().forEach((j) -> {
+            names.add(j.getFirstName() + " " + j.getLastName());
+        });
+
+        return names;
     }
 
     public JudgeFacade() {

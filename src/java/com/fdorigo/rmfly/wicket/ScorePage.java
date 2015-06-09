@@ -7,6 +7,7 @@ package com.fdorigo.rmfly.wicket;
 
 import com.fdorigo.rmfly.jpa.entities.Record;
 import com.fdorigo.rmfly.jpa.entities.Score;
+import com.fdorigo.rmfly.jpa.session.JudgeFacade;
 import com.fdorigo.rmfly.jpa.session.RecordFacade;
 import com.fdorigo.rmfly.jpa.session.ScoreFacade;
 import java.util.logging.Logger;
@@ -14,11 +15,13 @@ import javax.ejb.EJB;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.wicket.extensions.markup.html.form.DateTextField;
 import org.apache.wicket.extensions.yui.calendar.DatePicker;
+import org.apache.wicket.markup.html.form.DropDownChoice;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.validation.validator.RangeValidator;
 
@@ -36,6 +39,9 @@ public final class ScorePage extends BasePage {
 
     @EJB(name = "RecordFacade")
     private RecordFacade recordFacade;
+
+    @EJB(name = "JudgeFacade")
+    private JudgeFacade judgeFacade;
 
     private Record record = new Record();
     private Score score = new Score();
@@ -58,13 +64,13 @@ public final class ScorePage extends BasePage {
             if (record != null) {
                 validNnumber = true;
                 score.setNnumber(record);
-                score.setOwnerName(record.getFirstName() + " " + record.getLastName()); 
+                score.setOwnerName(record.getFirstName() + " " + record.getLastName());
                 score.setCategory(record.getCategory());
             } else {
                 validNnumber = false;
             }
         }
-        
+
         init();
     }
 
@@ -82,10 +88,10 @@ public final class ScorePage extends BasePage {
         searchField.setRequired(true);
         final TextField<String> ownerName = new TextField<>("ownerName");
         ownerName.setRequired(true);
-        final TextField<String> judgeName = new TextField<>("judgeName");
-        judgeName.setRequired(true);
-        final TextField<String> category = new TextField<>("category");
 
+        final DropDownChoice<String> ddc = new DropDownChoice<>("judgeName", new PropertyModel<String>(score, "judgeName"), judgeFacade.getAllNames());
+        
+        final TextField<String> category = new TextField<>("category");
         // Scoring Fields 
         final TextField<Integer> overall = new TextField<>("scoreOverall", Integer.class);
         overall.add(new RangeValidator<>(1, 10));
@@ -121,7 +127,7 @@ public final class ScorePage extends BasePage {
         add(searchForm);
         searchForm.add(dateTextField);
         searchForm.add(ownerName);
-        searchForm.add(judgeName);
+        searchForm.add(ddc.setRequired(true));
         searchForm.add(searchField);
         searchForm.add(category);
         searchForm.add(overall);
