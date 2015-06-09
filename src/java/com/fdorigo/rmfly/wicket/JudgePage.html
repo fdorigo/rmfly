@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns:wicket="http://wicket.apache.org">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <title>Register Airshow Judge</title>
+    </head>
+    <body>
+        <wicket:extend>
+            <div wicket:id="feedback"></div>
+            <form wicket:id="judgeForm" class="pure-form pure-form-stacked">
+                <fieldset>
+                    <legend><wicket:message key="form-label" /></legend>
+
+                    <div class="pure-u-1">
+                        <label>First Name</label>
+                        <input wicket:id="firstName" type="text" />
+                    </div>
+
+                    <div class="pure-u-1">
+                        <label>Last Name</label>
+                        <input wicket:id="lastName" type="text" />
+                    </div>
+
+                    <div class="pure-u-1">
+                        <label>Phone (while at the show)</label>
+                        <input wicket:id="phoneNumber" type="text" onkeydown="javascript:backspacerDOWN(this, event);" onkeyup="javascript:backspacerUP(this, event);" />
+                    </div>
+                    <div class="pure-u-1">
+                        <button type="submit" class="pure-button pure-button-primary" >
+                            <i class="fa fa-floppy-o"></i> 
+                            Add Judge
+                        </button>
+                    </div>
+                </fieldset>
+            </form>
+        </wicket:extend>
+    </body>
+</html>

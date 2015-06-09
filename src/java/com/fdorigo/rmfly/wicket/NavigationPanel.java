@@ -56,5 +56,13 @@ public class NavigationPanel extends Panel {
             }
         };
         this.add(judgeAirplane);
+
+        Link addJudge = new Link("add_judge") {
+            @Override
+            public void onClick() {
+                this.setResponsePage(new JudgePage());
+            }
+        };
+        this.add(addJudge);
     }
 }

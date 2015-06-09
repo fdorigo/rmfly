@@ -11,7 +11,6 @@ import com.fdorigo.rmfly.jpa.session.AbstractFacade;
 import com.fdorigo.rmfly.jpa.session.RecordFacade;
 import com.fdorigo.rmfly.jpa.session.ScoreFacade;
 import com.fdorigo.rmfly.wicket.dataproviders.ScoreDataProvider;
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Logger;
@@ -70,8 +69,6 @@ public final class ViewScorePage extends BasePage {
 
         List<Score> scoreList = scoreFacade.getScoresByNnumber(record);
 
-        LOG.info("Score List: " + scoreList.toString());
-
         add(new Label("totalScored", Model.of(scoreList.size())));
         add(new Label("category", record.getCategory()));
 
@@ -84,16 +81,8 @@ public final class ViewScorePage extends BasePage {
             @Override
             public Iterator<? extends Score> iterator(long first, long count) {
                 int[] range = {(int) first, (int) count};
-                List<Score> records = getFacade().findRange(range);
-                List<Score> filtered = new ArrayList<>();
-
-                for (Score s : records) {
-                    if (s.getNnumber().equals(record)) {
-                        filtered.add(s);
-                    }
-                }
-
-                return filtered.iterator();
+                List<Score> scoreList = scoreFacade.getScoresByNnumber(record);
+                return scoreList.iterator();
             }
 
             @Override
