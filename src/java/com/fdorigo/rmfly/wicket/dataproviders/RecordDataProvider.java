@@ -9,7 +9,7 @@ import com.fdorigo.rmfly.jpa.entities.Record;
 import java.util.Iterator;
 import java.util.List;
 import org.apache.wicket.model.IModel;
-import org.apache.wicket.model.LoadableDetachableModel; 
+import org.apache.wicket.model.LoadableDetachableModel;
 
 /**
  *
@@ -19,9 +19,8 @@ public abstract class RecordDataProvider implements IEjbDataProvider<Record> {
 
     @Override
     public Iterator<? extends Record> iterator(long first, long count) {
-        int[] range = {(int) first, (int) count};
-        List<Record> records = getFacade().findRange(range);
-        return records.iterator();
+        List<Record> records = getFacade().findAll();
+        return records.subList((int) first, (int) (first + count)).iterator();
     }
 
     @Override

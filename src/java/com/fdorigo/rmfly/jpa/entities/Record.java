@@ -57,8 +57,6 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 public class Record implements Serializable {
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "nnumber", fetch = FetchType.EAGER)
-//    @ElementCollection
-//    @CollectionTable(name = "score", joinColumns = @JoinColumn(name = "nnumber"))
     private Collection<Score> scoreCollection;
 
     private static final long serialVersionUID = 1L;

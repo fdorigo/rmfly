@@ -9,13 +9,12 @@ import com.fdorigo.rmfly.jpa.entities.Record;
 import com.fdorigo.rmfly.jpa.session.AbstractFacade;
 import com.fdorigo.rmfly.jpa.session.RecordFacade;
 import com.fdorigo.rmfly.wicket.dataproviders.RecordDataProvider;
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.link.BookmarkablePageLink;
+import org.apache.wicket.markup.html.navigation.paging.PagingNavigator;
 import org.apache.wicket.markup.repeater.Item;
 import org.apache.wicket.markup.repeater.data.DataView;
 import org.apache.wicket.model.Model;
@@ -47,21 +46,6 @@ public class HomePage extends BasePage {
         add(new Label("totalCompeting", Model.of(competingCount)));
 
         RecordDataProvider gdp = new RecordDataProvider() {
-            @Override
-            public Iterator<? extends Record> iterator(long first, long count) {
-                int[] range = {(int) first, (int) count};
-                List<Record> records = getFacade().findRange(range);
-                List<Record> judgeableRecords = new ArrayList<>();
-//
-//                for (Record r : records) {
-//                    if (r.getNeedJudging() != null && r.getNeedJudging() == false) {
-//                        judgeableRecords.add(r);
-//                    }
-//                }
-//                return judgeableRecords.iterator();
-                return records.iterator();
-            }
-
             @Override
             public AbstractFacade<Record> getFacade() {
                 return recordFacade;
@@ -101,8 +85,9 @@ public class HomePage extends BasePage {
             }
         };
 
+        recordListView.setItemsPerPage(10L);
         add(recordListView);
-
+        add(new PagingNavigator("pagingNavigator", recordListView));
     }
 
 }

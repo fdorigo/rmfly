@@ -14,7 +14,8 @@ import javax.persistence.EntityManager;
  * @author fdorigo
  */
 public abstract class AbstractFacade<T> {
-    private Class<T> entityClass;
+
+    private final Class<T> entityClass;
 
     public AbstractFacade(Class<T> entityClass) {
         this.entityClass = entityClass;
@@ -25,7 +26,7 @@ public abstract class AbstractFacade<T> {
     public void lazyRefresh() {
         getEntityManager().getEntityManagerFactory().getCache().evictAll();
     }
-    
+
     public void create(T entity) {
         getEntityManager().persist(entity);
     }
@@ -66,5 +67,5 @@ public abstract class AbstractFacade<T> {
         javax.persistence.Query q = getEntityManager().createQuery(cq);
         return ((Long) q.getSingleResult()).intValue();
     }
-    
+
 }
