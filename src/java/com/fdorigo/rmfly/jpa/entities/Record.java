@@ -186,11 +186,11 @@ public class Record implements Serializable {
     }
 
     public String getAddressState() {
-        return addressState;
+        return addressState.length() == 2 ? addressState.toUpperCase() : addressState;
     }
 
     public void setAddressState(String addressState) {
-        this.addressState = addressState;
+        this.addressState = addressState.length() == 2 ? addressState.toUpperCase() : addressState;
     }
 
     public String getAddressZip() {

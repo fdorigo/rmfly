@@ -14,6 +14,7 @@ import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
 
 /**
  *
@@ -32,16 +33,13 @@ public final class JudgePage extends BasePage {
         this.judge = new Judge();
         init();
     }
-
-//    @Override
-//    public void renderHead(IHeaderResponse response) {
-//        PackageResourceReference TEL_JS = new PackageResourceReference(JudgePage.class, "js/airshow-telephone.js");
-//        response.render(JavaScriptReferenceHeaderItem.forReference(TEL_JS));
-//    }
-//    
-//    
+    
+    public JudgePage(PageParameters params) {
+        
+    }
 
     private void init() {
+        
         add(new FeedbackPanel("feedback"));
 
         final TextField<String> firstNameField = new TextField<>("firstName");
@@ -52,6 +50,17 @@ public final class JudgePage extends BasePage {
         Form<Judge> judgeForm = new Form<Judge>("judgeForm", new CompoundPropertyModel<>(judgeModel)) {
             @Override
             protected void onSubmit() {
+                LOG.info(judgeModel.getObject().toString());
+                
+                if (judgeFacade.exists(judgeModel.getObject()))
+                {
+                    judge = judgeFacade.getByFirstLast(judgeModel.getObject());
+                    judge.setFirstName(judgeModel.getObject().getFirstName());
+                    judge.setLastName(judgeModel.getObject().getLastName());
+                    judge.setPhoneNumber(judgeModel.getObject().getPhoneNumber());
+                    LOG.info(judge.toString());
+                }
+                
                 judgeFacade.edit(judge);
             }
         };

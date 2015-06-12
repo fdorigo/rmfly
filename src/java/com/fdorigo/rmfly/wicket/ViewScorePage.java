@@ -10,6 +10,7 @@ import com.fdorigo.rmfly.jpa.entities.Score;
 import com.fdorigo.rmfly.jpa.session.AbstractFacade;
 import com.fdorigo.rmfly.jpa.session.RecordFacade;
 import com.fdorigo.rmfly.jpa.session.ScoreFacade;
+import com.fdorigo.rmfly.utils.ScoreResults;
 import com.fdorigo.rmfly.wicket.dataproviders.ScoreDataProvider;
 import java.util.Iterator;
 import java.util.List;
@@ -113,14 +114,17 @@ public final class ViewScorePage extends BasePage {
         };
 
         add(recordListView);
-        add(new Label("avgoverall", "n/a"));
-        add(new Label("avgfuselage", "n/a"));
-        add(new Label("avglift", "n/a"));
-        add(new Label("avgpitch", "n/a"));
-        add(new Label("avglanding", "n/a"));
-        add(new Label("avgcockpit", "n/a"));
-        add(new Label("avgpower", "n/a"));
-        add(new Label("avgfinish", "n/a"));
-        add(new Label("avginnovation", "n/a"));
+        
+        ScoreResults results = new ScoreResults(scoreList);
+        
+        add(new Label("avgoverall", Model.of(results.getScoreOverall())));
+        add(new Label("avgfuselage", Model.of(results.getScoreFuselage())));
+        add(new Label("avglift", Model.of(results.getScoreLifts())));
+        add(new Label("avgpitch", Model.of(results.getScorePitch())));
+        add(new Label("avglanding", Model.of(results.getScoreLanding())));
+        add(new Label("avgcockpit", Model.of(results.getScoreCockpit())));
+        add(new Label("avgpower", Model.of(results.getScorePower())));
+        add(new Label("avgfinish", Model.of(results.getScoreFinish())));
+        add(new Label("avginnovation", Model.of(results.getScoreInnovation())));
     }
 }

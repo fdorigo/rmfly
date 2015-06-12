@@ -12,8 +12,8 @@ package com.fdorigo.rmfly.wicket.components;
 public enum AirplaneType {
     VINTAGE(1,"Vintage"),
     WARBIRD(2,"Warbird"),
-    HOMEKIT(3,"Homenuilt, Kit"),
-    HOMEPLANS(4,"Homenuilt, Plans"),
+    HOMEKIT(3,"Homebuilt, Kit"),
+    HOMEPLANS(4,"Homebuilt, Plans"),
     LIGHTSPORT(5,"Light Sport"),
     CUSTOM(6,"Custom/Modern");
     

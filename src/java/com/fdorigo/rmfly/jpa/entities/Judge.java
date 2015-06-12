@@ -31,8 +31,10 @@ import org.apache.commons.lang3.StringUtils;
     @NamedQuery(name = "Judge.findById", query = "SELECT j FROM Judge j WHERE j.id = :id"),
     @NamedQuery(name = "Judge.findByFirstName", query = "SELECT j FROM Judge j WHERE j.firstName = :firstName"),
     @NamedQuery(name = "Judge.findByLastName", query = "SELECT j FROM Judge j WHERE j.lastName = :lastName"),
+    @NamedQuery(name = "Judge.findByFirstLastName", query = "SELECT j FROM Judge j WHERE j.firstName = :firstName AND j.lastName = :lastName"),
     @NamedQuery(name = "Judge.findByPhoneNumber", query = "SELECT j FROM Judge j WHERE j.phoneNumber = :phoneNumber")})
 public class Judge implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -110,7 +112,7 @@ public class Judge implements Serializable {
 
     @Override
     public String toString() {
-        return "com.fdorigo.rmfly.jpa.entities.Judge[ id=" + id + " ]";
+        return "Judge[ id=" + id + " name=" + firstName + " " + lastName + " ]";
     }
-    
+
 }

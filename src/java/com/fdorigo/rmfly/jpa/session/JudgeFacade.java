@@ -11,6 +11,7 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 
 /**
  *
@@ -25,6 +26,29 @@ public class JudgeFacade extends AbstractFacade<Judge> {
     @Override
     protected EntityManager getEntityManager() {
         return em;
+    }
+
+    public Judge getByFirstLast(Judge newJudge) {
+        TypedQuery<Judge> query
+                = em.createNamedQuery("Judge.findByFirstLastName", Judge.class);
+        query.setParameter("firstName", newJudge.getFirstName());
+        query.setParameter("lastName", newJudge.getLastName());
+        Judge results = query.getResultList().get(0);
+        return results;
+    }
+
+    public boolean exists(Judge newJudge) {
+        boolean retVal = false;
+        String newName = newJudge.getFirstName() + " " + newJudge.getLastName();
+
+        for (String name : getAllNames()) {
+            if (name.equalsIgnoreCase(newName)) {
+                retVal = true;
+                break;
+            }
+        }
+
+        return retVal;
     }
 
     public List<String> getAllNames() {
