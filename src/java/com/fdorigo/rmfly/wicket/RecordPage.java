@@ -16,6 +16,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.extensions.markup.html.form.DateTextField;
 import org.apache.wicket.extensions.yui.calendar.DatePicker;
+import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.html.form.DropDownChoice;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.Radio;
@@ -135,15 +136,26 @@ public final class RecordPage extends BasePage {
         group.add(radios);
 
         Model<Record> recordModel = new Model<>(record);
-        Form<Record> recordForm = new Form<Record>("recordForm", new CompoundPropertyModel<>(recordModel)) {
+        Form<Record> recordForm = new Form<Record>("recordForm", new CompoundPropertyModel<>(recordModel));
+
+        recordForm.add(new Button("save") {
             @Override
-            protected void onSubmit() {
-                LOG.info("Saving record: " + record);
+            public void onSubmit() {
                 record.setCategory(selected.toString());
                 recordFacade.edit(record);
             }
+        });
+        
+        Button deleteRecordButton = new Button("delete") {
+            @Override
+            public void onSubmit() {
+                recordFacade.remove(record);
+            }
         };
-
+        
+        deleteRecordButton.setDefaultFormProcessing(false);
+        recordForm.add(deleteRecordButton);
+        
         add(recordForm);
 
         recordForm.add(nNumberField);

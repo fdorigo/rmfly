@@ -112,7 +112,7 @@ public class Judge implements Serializable {
 
     @Override
     public String toString() {
-        return "Judge[ id=" + id + " name=" + firstName + " " + lastName + " ]";
+        return firstName + " " + lastName;
     }
 
 }

@@ -11,7 +11,13 @@
             <form wicket:id="judgeForm" class="pure-form pure-form-stacked">
                 <fieldset>
                     <legend><wicket:message key="form-label" /></legend>
-
+                    <label>Edit Judge Information</label>
+                    <div class="pure-u-1">
+                        <select wicket:id="judgeName" class="pure-u-1-4"> 
+                            <option>Some option</option>
+                        </select>
+                    </div>
+                    
                     <div class="pure-u-1">
                         <label>First Name</label>
                         <input wicket:id="firstName" type="text" />
@@ -26,7 +32,7 @@
                         <label>Phone (while at the show)</label>
                         <input wicket:id="phoneNumber" type="text" onkeydown="javascript:backspacerDOWN(this, event);" onkeyup="javascript:backspacerUP(this, event);" />
                     </div>
-                    <div class="pure-u-1">
+                    <div class="pure-u-1" style="margin-top: 20px;">
                         <button type="submit" class="pure-button pure-button-primary" >
                             <i class="fa fa-floppy-o"></i> 
                             Add Judge

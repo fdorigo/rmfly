@@ -186,6 +186,9 @@ public class Record implements Serializable {
     }
 
     public String getAddressState() {
+        if (addressState == null) {
+            return null;
+        }
         return addressState.length() == 2 ? addressState.toUpperCase() : addressState;
     }
 
