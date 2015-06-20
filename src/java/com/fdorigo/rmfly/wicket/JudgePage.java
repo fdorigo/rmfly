@@ -10,8 +10,6 @@ import com.fdorigo.rmfly.jpa.session.JudgeFacade;
 import java.util.List;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
-import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.ajax.form.AjaxFormComponentUpdatingBehavior;
 import org.apache.wicket.markup.html.form.DropDownChoice;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextField;
@@ -38,7 +36,7 @@ public final class JudgePage extends BasePage {
         this.judge = new Judge();
         init();
     }
-    
+
     public JudgePage(PageParameters params) {
         this.judge = judgeFacade.find(Integer.parseInt(params.get("jId").toString()));
         init();
@@ -59,20 +57,24 @@ public final class JudgePage extends BasePage {
 
                 }) {
 
-                    @Override
-                    protected boolean wantOnSelectionChangedNotifications() {
-                        return true;
-                    }
+            @Override
+            public boolean isNullValid() {
+                return true; 
+            }
+                        
+            @Override
+            protected boolean wantOnSelectionChangedNotifications() {
+                return true;
+            }
 
-                    @Override
-                    protected void onSelectionChanged(Judge newSelection) {
-                        judge = newSelection;
-                        PageParameters params = new PageParameters();
-                        params.add("jId", judge.getId());
-                        setResponsePage(JudgePage.class, params);
-                    }
-
-                };
+            @Override
+            protected void onSelectionChanged(Judge newSelection) {
+                judge = newSelection;
+                PageParameters params = new PageParameters();
+                params.add("jId", judge.getId());
+                setResponsePage(JudgePage.class, params);
+            }
+        };
 
         final TextField<String> firstNameField = new TextField<>("firstName");
         final TextField<String> lastNameField = new TextField<>("lastName");
@@ -82,24 +84,16 @@ public final class JudgePage extends BasePage {
         Form<Judge> judgeForm = new Form<Judge>("judgeForm", new CompoundPropertyModel<>(judgeModel)) {
 
             @Override
-            protected void onModelChanged() {
-                super.onModelChanged(); //To change body of generated methods, choose Tools | Templates.
-                LOG.info("On model changed");
-            }
-
-            @Override
             protected void onSubmit() {
-                LOG.info(judgeModel.getObject().toString());
-
                 if (judgeFacade.exists(judgeModel.getObject())) {
                     judge = judgeFacade.getByFirstLast(judgeModel.getObject());
                     judge.setFirstName(judgeModel.getObject().getFirstName());
                     judge.setLastName(judgeModel.getObject().getLastName());
                     judge.setPhoneNumber(judgeModel.getObject().getPhoneNumber());
-                    LOG.info(judge.toString());
                 }
 
                 judgeFacade.edit(judge);
+                setResponsePage(HomePage.class);
             }
         };
 
@@ -109,15 +103,6 @@ public final class JudgePage extends BasePage {
         judgeForm.add(firstNameField.setRequired(true));
         judgeForm.add(lastNameField.setRequired(true));
         judgeForm.add(phoneNumber.setRequired(true));
-        judgeForm.add(ddc);
-
-        ddc.add(new AjaxFormComponentUpdatingBehavior("onchange") {
-            @Override
-            protected void onUpdate(AjaxRequestTarget target) {
-
-                target.add(judgeForm);
-            }
-        });
+        judgeForm.add(ddc.setRequired(false));
     }
-
 }

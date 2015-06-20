@@ -40,4 +40,17 @@ public class ScoreFacade extends AbstractFacade<Score> {
         return results;
     }
 
+    public Integer exists(String judgeName, String nnumber) {
+        Integer retVal = null;
+        List<Score> scores = findAll();
+
+        for (Score s : scores) {
+            if (s.getNnumber().getNnumber().equals(nnumber) && s.getJudgeName().equalsIgnoreCase(judgeName)) {
+                retVal = s.getId();
+                break;
+            }
+        }
+
+        return retVal;
+    }
 }

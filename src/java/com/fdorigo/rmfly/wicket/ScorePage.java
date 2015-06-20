@@ -90,7 +90,7 @@ public final class ScorePage extends BasePage {
         ownerName.setRequired(true);
 
         final DropDownChoice<String> ddc = new DropDownChoice<>("judgeName", new PropertyModel<String>(score, "judgeName"), judgeFacade.getAllNames());
-        
+
         final TextField<String> category = new TextField<>("category");
         // Scoring Fields 
         final TextField<Integer> overall = new TextField<>("scoreOverall", Integer.class);
@@ -114,13 +114,26 @@ public final class ScorePage extends BasePage {
 
         Model<Score> scoreModel = new Model<>(score);
         Form<Score> searchForm = new Form<Score>("scoreForm", new CompoundPropertyModel<>(scoreModel)) {
-
             @Override
             protected void onSubmit() {
-                final String scoreString = searchField.getModelObject();
-                LOG.info(scoreString);
+                Integer existingScore = scoreFacade.exists(ddc.getModelObject(), score.getNnumber().getNnumber());
+                if (existingScore != null) {
+                    score = scoreFacade.find(existingScore);
+                    Score tempScore = scoreModel.getObject();
+                    score.setDate(tempScore.getDate());
+                    score.setScoreCockpit(tempScore.getScoreCockpit());
+                    score.setScoreFinish(tempScore.getScoreFinish());
+                    score.setScoreFuselage(tempScore.getScoreFuselage());
+                    score.setScoreInnovation(tempScore.getScoreInnovation());
+                    score.setScoreLanding(tempScore.getScoreLanding());
+                    score.setScoreLifts(tempScore.getScoreLifts());
+                    score.setScoreOverall(tempScore.getScoreOverall());
+                    score.setScorePitch(tempScore.getScorePitch());
+                    score.setScorePower(tempScore.getScorePower());
+                }
+
                 scoreFacade.edit(score);
-                setResponsePage(HomePage.class);
+                setResponsePage(CompetingPage.class);
             }
         };
 

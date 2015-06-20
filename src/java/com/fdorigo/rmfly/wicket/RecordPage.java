@@ -136,13 +136,14 @@ public final class RecordPage extends BasePage {
         group.add(radios);
 
         Model<Record> recordModel = new Model<>(record);
-        Form<Record> recordForm = new Form<Record>("recordForm", new CompoundPropertyModel<>(recordModel));
+        Form<Record> recordForm = new Form<>("recordForm", new CompoundPropertyModel<>(recordModel));
 
         recordForm.add(new Button("save") {
             @Override
             public void onSubmit() {
                 record.setCategory(selected.toString());
                 recordFacade.edit(record);
+                setResponsePage(HomePage.class);
             }
         });
         
@@ -150,6 +151,7 @@ public final class RecordPage extends BasePage {
             @Override
             public void onSubmit() {
                 recordFacade.remove(record);
+                setResponsePage(HomePage.class);
             }
         };
         
