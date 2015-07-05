@@ -76,10 +76,10 @@ public class HomePage extends BasePage {
                 BookmarkablePageLink<Void> pageLink = new BookmarkablePageLink<>("pageLinkWithArgs", RecordPage.class, parameters);
                 BookmarkablePageLink<Void> scoreLink = new BookmarkablePageLink<>("scoreLinkWithArgs", ScorePage.class, parameters);
 
-                item.add(pageLink.add(new Label("nnumber", "edit")));
+                item.add(pageLink.add(new Label("nnumber", record.getNnumber())));
                 item.add(new Label("firstName", record.getFirstName()));
                 item.add(new Label("lastName", record.getLastName()));
-                item.add(scoreLink.add(new Label("score", record.getNnumber())));
+                item.add(scoreLink.add(new Label("score", "add score")));
                 item.add(new Label("competing", needJudging.toString()));
                 item.add(new Label("judged", scoreSize.toString()));
             }

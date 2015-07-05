@@ -96,6 +96,7 @@ public class CompetingPage extends BasePage {
 
                 item.add(pageLink.add(new Label("nnumber", record.getNnumber())));
                 item.add(new Label("ownerName", record.getOwnerName()));
+                item.add(new Label("category", record.getCategory()));
                 item.add(scoreLink.add(new Label("score", "add new score")));
                 item.add(new Label("judged", scoreSize.toString()));
                 item.add(resultLink.add(new Label("results", "view")));

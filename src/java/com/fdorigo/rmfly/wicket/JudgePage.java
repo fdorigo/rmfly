@@ -57,24 +57,26 @@ public final class JudgePage extends BasePage {
 
                 }) {
 
-            @Override
-            public boolean isNullValid() {
-                return true; 
-            }
-                        
-            @Override
-            protected boolean wantOnSelectionChangedNotifications() {
-                return true;
-            }
+                    @Override
+                    public boolean isNullValid() {
+                        return true;
+                    }
 
-            @Override
-            protected void onSelectionChanged(Judge newSelection) {
-                judge = newSelection;
-                PageParameters params = new PageParameters();
-                params.add("jId", judge.getId());
-                setResponsePage(JudgePage.class, params);
-            }
-        };
+                    @Override
+                    protected boolean wantOnSelectionChangedNotifications() {
+                        return true;
+                    }
+
+                    @Override
+                    protected void onSelectionChanged(Judge newSelection) {
+                        judge = newSelection;
+                        PageParameters params = new PageParameters();
+                        if (judge != null) {
+                            params.add("jId", judge.getId());
+                        }
+                        setResponsePage(JudgePage.class, params);
+                    }
+                };
 
         final TextField<String> firstNameField = new TextField<>("firstName");
         final TextField<String> lastNameField = new TextField<>("lastName");
