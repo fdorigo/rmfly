@@ -6,13 +6,16 @@
 package com.fdorigo.rmfly.utils;
 
 import com.fdorigo.rmfly.jpa.entities.Score;
+import java.io.Serializable;
 import java.util.List;
 
 /**
  *
- * @author fdorigo
+ * @author Francesco Dorigo
  */
-public class ScoreResults {
+public class ScoreResults implements Serializable {
+    
+    private static final long serialVersionUID = 1L;
 
     private float scoreOverall;
     private float scoreFuselage;

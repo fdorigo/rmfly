@@ -55,5 +55,13 @@ public class NavigationPanel extends Panel {
             }
         };
         this.add(addJudge);
+        
+        Link resultPage = new Link("result_page") {
+            @Override
+            public void onClick() {
+                this.setResponsePage(new CompetitionResultsPage());
+            }
+        };
+        this.add(resultPage);
     }
 }
