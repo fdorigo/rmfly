@@ -40,14 +40,6 @@ public class NavigationPanel extends Panel {
         };
         this.add(movieListPageLink);
 
-        Link judgeAirplane = new Link("judge_airplane") {
-            @Override
-            public void onClick() {
-                this.setResponsePage(new ScorePage());
-            }
-        };
-        this.add(judgeAirplane);
-
         Link addJudge = new Link("add_judge") {
             @Override
             public void onClick() {
@@ -55,5 +47,13 @@ public class NavigationPanel extends Panel {
             }
         };
         this.add(addJudge);
+        
+        Link resultPage = new Link("result_page") {
+            @Override
+            public void onClick() {
+                this.setResponsePage(new CompetitionResultsPage());
+            }
+        };
+        this.add(resultPage);
     }
 }

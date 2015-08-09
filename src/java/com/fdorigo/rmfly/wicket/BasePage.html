@@ -9,6 +9,8 @@
             <link rel="stylesheet" type="text/css" href="css/fa/css/font-awesome.min.css" />
             <link rel="stylesheet" type="text/css" href="css/style.css"/>
             <script type="text/javascript" src="js/airshow-telephone.js"></script>
+            <script type="text/javascript" src="js/jquery-2.1.4.js"></script>
+            <script type="text/javascript" src="js/jquery.tablesort.js"></script>
             <meta name="viewport" content="width=device-width, initial-scale=1"/>        
         </wicket:head> 
     </head> 
@@ -29,6 +31,14 @@
             </div>
         </div>
 
-        <script src="js/ui.js"></script>
+        <script type="text/javascript" src="js/ui.js"></script>
+        <script type="text/javascript">
+	$(function() {
+		$('table').tablesort().data('tablesort');
+		$('thead th.number').data('sortBy', function(th, td, sorter) {
+			return parseInt(td.text(), 10);
+		});
+	});
+</script>
     </body> 
 </html>

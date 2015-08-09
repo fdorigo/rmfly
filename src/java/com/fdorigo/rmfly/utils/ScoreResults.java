@@ -6,14 +6,18 @@
 package com.fdorigo.rmfly.utils;
 
 import com.fdorigo.rmfly.jpa.entities.Score;
+import java.io.Serializable;
 import java.util.List;
 
 /**
  *
- * @author fdorigo
+ * @author Francesco Dorigo
  */
-public class ScoreResults {
+public class ScoreResults implements Serializable, Comparable {
+    
+    private static final long serialVersionUID = 1L;
 
+    private String nnumber;
     private float scoreOverall;
     private float scoreFuselage;
     private float scoreLifts;
@@ -25,6 +29,11 @@ public class ScoreResults {
     private float scoreInnovation;
     private float totalScore;
 
+    public ScoreResults(String nnum, List<Score> scores) {
+        this(scores);
+        this.nnumber = nnum;
+    }
+    
     public ScoreResults(List<Score> scores) {
         if (scores == null || scores.isEmpty()) {
             return;
@@ -57,6 +66,10 @@ public class ScoreResults {
         scoreFinish /= divider;
         scoreInnovation /= divider;
         totalScore /= divider;
+    }
+    
+    public String getNnumber() {
+        return nnumber;
     }
 
     public Float getScoreOverall() {
@@ -97,5 +110,16 @@ public class ScoreResults {
 
     public Float getTotalScore() {
         return totalScore;
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        final ScoreResults other = (ScoreResults) o;
+        
+        if (other.totalScore != this.totalScore) {
+            return other.getTotalScore().compareTo(this.totalScore);
+        }
+        
+        return other.getScoreOverall().compareTo(this.scoreOverall);
     }
 }

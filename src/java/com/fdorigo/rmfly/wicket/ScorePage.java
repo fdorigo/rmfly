@@ -46,10 +46,7 @@ public final class ScorePage extends BasePage {
     private Record record = new Record();
     private Score score = new Score();
 
-    private final Boolean validNnumber;
-
     public ScorePage() {
-        validNnumber = false;
         init();
     }
 
@@ -57,17 +54,12 @@ public final class ScorePage extends BasePage {
 
         final String nNumberString = params.get("nNumber").toString();
 
-        if (StringUtils.isEmpty(nNumberString)) {
-            validNnumber = false;
-        } else {
+        if (!StringUtils.isEmpty(nNumberString)) {
             record = recordFacade.find(nNumberString);
             if (record != null) {
-                validNnumber = true;
                 score.setNnumber(record);
                 score.setOwnerName(record.getFirstName() + " " + record.getLastName());
                 score.setCategory(record.getCategory());
-            } else {
-                validNnumber = false;
             }
         }
 
@@ -93,24 +85,24 @@ public final class ScorePage extends BasePage {
 
         final TextField<String> category = new TextField<>("category");
         // Scoring Fields 
-        final TextField<Integer> overall = new TextField<>("scoreOverall", Integer.class);
-        overall.add(new RangeValidator<>(1, 10));
         final TextField<Integer> fuselage = new TextField<>("scoreFuselage", Integer.class);
-        fuselage.add(new RangeValidator<>(1, 10));
+        fuselage.setRequired(true).add(new RangeValidator<>(1, 10));
         final TextField<Integer> lifts = new TextField<>("scoreLifts", Integer.class);
-        lifts.add(new RangeValidator<>(1, 10));
+        lifts.setRequired(true).add(new RangeValidator<>(1, 10));
         final TextField<Integer> pitch = new TextField<>("scorePitch", Integer.class);
-        pitch.add(new RangeValidator<>(1, 10));
+        pitch.setRequired(true).add(new RangeValidator<>(1, 10));
         final TextField<Integer> landing = new TextField<>("scoreLanding", Integer.class);
-        landing.add(new RangeValidator<>(1, 10));
+        landing.setRequired(true).add(new RangeValidator<>(1, 10));
         final TextField<Integer> cockpit = new TextField<>("scoreCockpit", Integer.class);
-        cockpit.add(new RangeValidator<>(1, 10));
+        cockpit.setRequired(true).add(new RangeValidator<>(1, 10));
         final TextField<Integer> power = new TextField<>("scorePower", Integer.class);
-        power.add(new RangeValidator<>(1, 10));
+        power.setRequired(true).add(new RangeValidator<>(1, 10));
         final TextField<Integer> finish = new TextField<>("scoreFinish", Integer.class);
-        finish.add(new RangeValidator<>(1, 10));
+        finish.setRequired(true).add(new RangeValidator<>(1, 10));
         final TextField<Integer> innovation = new TextField<>("scoreInnovation", Integer.class);
-        innovation.add(new RangeValidator<>(1, 10));
+        innovation.setRequired(true).add(new RangeValidator<>(1, 10));
+        final TextField<Integer> overall = new TextField<>("scoreOverall", Integer.class);
+        overall.setRequired(true).add(new RangeValidator<>(1, 10));
 
         Model<Score> scoreModel = new Model<>(score);
         Form<Score> searchForm = new Form<Score>("scoreForm", new CompoundPropertyModel<>(scoreModel)) {
