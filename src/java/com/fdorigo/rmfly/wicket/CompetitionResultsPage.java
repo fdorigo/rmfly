@@ -81,7 +81,7 @@ public final class CompetitionResultsPage extends BasePage {
         
         for (Record r : judgeableRecords) {
             List<Score> scores = (List<Score>)r.getScoreCollection();
-            ScoreResults result = new ScoreResults(scores);
+            ScoreResults result = new ScoreResults(r.getNnumber(), scores);
             resultList.add(result);
         }
                 
@@ -91,7 +91,7 @@ public final class CompetitionResultsPage extends BasePage {
         
         judgeableRecords.stream().filter((r) -> (AirplaneType.HOMEKIT.toString().equals(r.getCategory()))).forEach((r) -> {
             List<Score> scores = (List<Score>)r.getScoreCollection();
-            ScoreResults result = new ScoreResults(scores);
+            ScoreResults result = new ScoreResults(r.getNnumber(), scores);
             resultList.add(result);
         });
         

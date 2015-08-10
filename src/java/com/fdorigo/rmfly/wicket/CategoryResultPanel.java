@@ -45,6 +45,7 @@ public final class CategoryResultPanel extends Panel {
 
                 ScoreResults score = item.getModelObject();
 
+                item.add(new Label("nnumber", Model.of(score.getNnumber())));
                 item.add(new Label("overall", Model.of(score.getScoreOverall())));
                 item.add(new Label("fuselage", Model.of(score.getScoreFuselage())));
                 item.add(new Label("lift", Model.of(score.getScoreLifts())));
@@ -59,17 +60,5 @@ public final class CategoryResultPanel extends Panel {
         };
 
         add(recordListView);
-
-//        ScoreResults results = new ScoreResults(scoreList);
-//
-//        add(new Label("avgoverall", Model.of(results.getScoreOverall())));
-//        add(new Label("avgfuselage", Model.of(results.getScoreFuselage())));
-//        add(new Label("avglift", Model.of(results.getScoreLifts())));
-//        add(new Label("avgpitch", Model.of(results.getScorePitch())));
-//        add(new Label("avglanding", Model.of(results.getScoreLanding())));
-//        add(new Label("avgcockpit", Model.of(results.getScoreCockpit())));
-//        add(new Label("avgpower", Model.of(results.getScorePower())));
-//        add(new Label("avgfinish", Model.of(results.getScoreFinish())));
-//        add(new Label("avginnovation", Model.of(results.getScoreInnovation())));
     }
 }

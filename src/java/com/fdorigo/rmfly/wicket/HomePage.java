@@ -79,9 +79,10 @@ public class HomePage extends BasePage {
                 item.add(pageLink.add(new Label("nnumber", record.getNnumber())));
                 item.add(new Label("firstName", record.getFirstName()));
                 item.add(new Label("lastName", record.getLastName()));
+                item.add(new Label("phoneNumber", record.getPrimaryPhone()));
                 item.add(scoreLink.add(new Label("score", "add score")));
-                item.add(new Label("competing", needJudging.toString()));
-                item.add(new Label("judged", scoreSize.toString()));
+                item.add(new Label("competing", needJudging == true ? "Yes" : "No"));
+                item.add(new Label("judged", needJudging == true ? scoreSize.toString() : null));
             }
         };
 

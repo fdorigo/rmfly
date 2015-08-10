@@ -17,6 +17,7 @@ public class ScoreResults implements Serializable {
     
     private static final long serialVersionUID = 1L;
 
+    private String nnumber;
     private float scoreOverall;
     private float scoreFuselage;
     private float scoreLifts;
@@ -28,6 +29,11 @@ public class ScoreResults implements Serializable {
     private float scoreInnovation;
     private float totalScore;
 
+    public ScoreResults(String nnum, List<Score> scores) {
+        this(scores);
+        this.nnumber = nnum;
+    }
+    
     public ScoreResults(List<Score> scores) {
         if (scores == null || scores.isEmpty()) {
             return;
@@ -60,6 +66,10 @@ public class ScoreResults implements Serializable {
         scoreFinish /= divider;
         scoreInnovation /= divider;
         totalScore /= divider;
+    }
+    
+    public String getNnumber() {
+        return nnumber;
     }
 
     public Float getScoreOverall() {

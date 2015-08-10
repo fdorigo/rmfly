@@ -2,11 +2,12 @@
 <wicket:panel>
     <h2 class="content-subhead">
         Category: <span wicket:id="category" />
-        Total Scores: <span wicket:id="totalScored" />
+        <br />Participants: <span wicket:id="totalScored" />
     </h2>
     <table class="pure-table" style="margin-left: -100px;">
         <thead>
             <tr>
+                <th>N-Num</th>
                 <th>Overall</th>
                 <th>Fuselage</th>
                 <th>Lift</th>
@@ -21,6 +22,7 @@
         </thead>
         <tbody>
             <tr wicket:id="scorelist">
+                <td><span wicket:id="nnumber">n number</span></td>
                 <td><span wicket:id="overall">overall</span></td>
                 <td><span wicket:id="fuselage">overall</span></td>
                 <td><span wicket:id="lift">overall</span></td>
