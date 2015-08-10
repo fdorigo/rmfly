@@ -13,7 +13,7 @@ import java.util.List;
  *
  * @author Francesco Dorigo
  */
-public class ScoreResults implements Serializable {
+public class ScoreResults implements Serializable, Comparable {
     
     private static final long serialVersionUID = 1L;
 
@@ -110,5 +110,16 @@ public class ScoreResults implements Serializable {
 
     public Float getTotalScore() {
         return totalScore;
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        final ScoreResults other = (ScoreResults) o;
+        
+        if (other.totalScore != this.totalScore) {
+            return other.getTotalScore().compareTo(this.totalScore);
+        }
+        
+        return other.getScoreOverall().compareTo(this.scoreOverall);
     }
 }

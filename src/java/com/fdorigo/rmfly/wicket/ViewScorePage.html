@@ -11,8 +11,16 @@
     <body> 
         <wicket:extend>
             <h2 class="content-subhead">
-                Category: <span wicket:id="category" />
-                Total Scores: <span wicket:id="totalScored" />
+                <div class="pure-g">
+                    <div class="pure-u-1-5">Category</div> 
+                    <div class="pure-u-4-5"><span wicket:id="category" /></div>
+                    <div class="pure-u-1-5">N Number</div> 
+                    <div class="pure-u-4-5"><span wicket:id="nnumber" /></div>
+                    <div class="pure-u-1-5">Owner</div> 
+                    <div class="pure-u-4-5"><span wicket:id="owner" /></div>
+                    <div class="pure-u-1-5">Total Scores</div> 
+                    <div class="pure-u-4-5"><span wicket:id="totalScored" /></div>
+                </div>
             </h2>
             <table class="pure-table" style="margin-left: -100px;">
                 <thead>
@@ -45,7 +53,7 @@
                         <td><span wicket:id="date">date</span></td>
                     </tr>
 
-                    <tr style="color:blue;">
+                    <tr style="font:bold;" class="pure-table-odd">
                         <td><span wicket:id="avgoverall">overall</span></td>
                         <td><span wicket:id="avgfuselage">overall</span></td>
                         <td><span wicket:id="avglift">overall</span></td>

@@ -53,14 +53,18 @@ public final class RecordPage extends BasePage {
 
     private final Boolean validNnumber;
 
+    private final Boolean formControlsEnabled;
+
     public RecordPage() {
         validNnumber = false;
+        formControlsEnabled = true;
         init();
     }
 
     public RecordPage(PageParameters params) {
 
         final String nNumberString = params.get("nNumber").toString();
+        formControlsEnabled = params.get("controls").toBoolean(true);
 
         if (StringUtils.isEmpty(nNumberString)) {
             validNnumber = false;
@@ -144,7 +148,7 @@ public final class RecordPage extends BasePage {
         Model<Record> recordModel = new Model<>(record);
         Form<Record> recordForm = new Form<>("recordForm", new CompoundPropertyModel<>(recordModel));
 
-        recordForm.add(new Button("save") {
+        final Button saveRecordButton = new Button("save") {
             @Override
             public void onSubmit() {
                 record.setCategory(selected.toString());
@@ -154,9 +158,13 @@ public final class RecordPage extends BasePage {
                 recordFacade.edit(record);
                 setResponsePage(HomePage.class);
             }
-        });
+        };
+        if (formControlsEnabled != true) {
+            saveRecordButton.setVisible(false);
+        }        
+        recordForm.add(saveRecordButton);
         
-        Button deleteRecordButton = new Button("delete") {
+        final Button deleteRecordButton = new Button("delete") {
             @Override
             public void onSubmit() {
                 recordFacade.remove(record);
@@ -165,7 +173,11 @@ public final class RecordPage extends BasePage {
         };
         
         deleteRecordButton.setDefaultFormProcessing(false);
+        if (formControlsEnabled != true) {
+            deleteRecordButton.setVisible(false);
+        }
         recordForm.add(deleteRecordButton);
+        
         
         add(recordForm);
 

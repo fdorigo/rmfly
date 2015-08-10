@@ -9,11 +9,13 @@ import com.fdorigo.rmfly.utils.ScoreResults;
 import java.util.List;
 import java.util.logging.Logger;
 import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.markup.repeater.Item;
 import org.apache.wicket.markup.repeater.data.DataView;
 import org.apache.wicket.markup.repeater.data.ListDataProvider;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
 
 /**
  *
@@ -44,8 +46,13 @@ public final class CategoryResultPanel extends Panel {
             protected void populateItem(Item<ScoreResults> item) {
 
                 ScoreResults score = item.getModelObject();
+                
+                PageParameters parameters = new PageParameters();
+                parameters.set("nNumber", score.getNnumber());
+                parameters.set("controls", "false");
+                BookmarkablePageLink<Void> pageLink = new BookmarkablePageLink<>("pageLinkWithArgs", RecordPage.class, parameters);
 
-                item.add(new Label("nnumber", Model.of(score.getNnumber())));
+                item.add(pageLink.add(new Label("nnumber", score.getNnumber())));
                 item.add(new Label("overall", Model.of(score.getScoreOverall())));
                 item.add(new Label("fuselage", Model.of(score.getScoreFuselage())));
                 item.add(new Label("lift", Model.of(score.getScoreLifts())));
