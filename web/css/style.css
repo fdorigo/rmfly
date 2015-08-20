@@ -13,3 +13,13 @@
     font-weight: bold;
 }
 
+/* Use these two style properties to display a simple arrow
+ * on the column header when sorting tables. 
+th.sorted.ascending:after {
+    content: "  \2191";
+}
+
+th.sorted.descending:after {
+    content: " \2193";
+}
+*/

@@ -11,8 +11,14 @@
     <body> 
         <wicket:extend>
             <h2 class="content-subhead">
-                Registered Participants: <span wicket:id="totalRegistered" />
-                <br />Competing: <span wicket:id="totalCompeting" />
+                <div class="pure-g">
+                    <div class="pure-u-1-5">Participants</div> 
+                    <div class="pure-u-4-5"><span wicket:id="totalRegistered" /></div>
+                    <div class="pure-u-1-5">Competing</div> 
+                    <div class="pure-u-4-5"><span wicket:id="totalCompeting" /></div>
+                    <div class="pure-u-1-5">Incomplete</div> 
+                    <div class="pure-u-4-5"><span wicket:id="incomplete" /></div>
+                </div>
             </h2>
             <table class="pure-table">
                 <thead>
@@ -21,8 +27,8 @@
                         <th>Category</th>
                         <th>Owner Name</th>
                         <th>Add Score</th>
-                        <th>Number of scores</th>
                         <th>Results</th>
+                        <th>Number of scores</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -31,8 +37,8 @@
                         <td><span wicket:id="category">Category</span></td>
                         <td><span wicket:id="ownerName">Owner Name</span></td>
                         <td><a wicket:id="scoreLinkWithArgs"><span wicket:id="score">Score</span></a></td>
-                        <td><span wicket:id="judged">score</span></td>
                         <td><a wicket:id="resultLinkWithArgs"><span wicket:id="results">results</span></a></td>
+                        <td><span wicket:id="judged">score</span></td>
                     </tr>
                 </tbody>
             </table>

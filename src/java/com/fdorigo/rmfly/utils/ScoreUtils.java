@@ -7,8 +7,8 @@ package com.fdorigo.rmfly.utils;
 
 /**
  *
- * @author fdorigo
- */
+ * @author Francesco Dorigo
+ */ 
 public class ScoreUtils {
     
 }

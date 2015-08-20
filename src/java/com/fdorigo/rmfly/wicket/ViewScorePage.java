@@ -72,6 +72,8 @@ public final class ViewScorePage extends BasePage {
 
         add(new Label("totalScored", Model.of(scoreList.size())));
         add(new Label("category", record.getCategory()));
+        add(new Label("nnumber", record.getNnumber()));
+        add(new Label("owner", record.getOwnerName()));
 
         /**
          * TODO, this function needs to be modified to provide the correct range

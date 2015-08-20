@@ -12,6 +12,7 @@ import com.fdorigo.rmfly.wicket.dataproviders.RecordDataProvider;
 import java.util.List;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
+import org.apache.wicket.behavior.AttributeAppender;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 import org.apache.wicket.markup.html.navigation.paging.PagingNavigator;
@@ -79,9 +80,23 @@ public class HomePage extends BasePage {
                 item.add(pageLink.add(new Label("nnumber", record.getNnumber())));
                 item.add(new Label("firstName", record.getFirstName()));
                 item.add(new Label("lastName", record.getLastName()));
+                item.add(new Label("phoneNumber", record.getPrimaryPhone()));
+//                item.add(new Label("competing", needJudging == true ? "Yes" : "No"));
+//                item.add(new Label("judged", needJudging == true ? scoreSize.toString() : null));
                 item.add(scoreLink.add(new Label("score", "add score")));
-                item.add(new Label("competing", needJudging.toString()));
-                item.add(new Label("judged", scoreSize.toString()));
+
+                Label l = new Label("competing"); 
+                if (needJudging == false) {
+                    l.setDefaultModel(Model.of("No"));
+                }
+                else {
+                    l.setDefaultModel(Model.of("Yes"));
+                    if (scoreSize < 3) {
+                        String styleAttr = "color: red;";
+                        l.add(new AttributeAppender("style", styleAttr));
+                    }
+                }
+                item.add(l);
             }
         };
 

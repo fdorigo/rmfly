@@ -9,6 +9,7 @@ import com.fdorigo.rmfly.jpa.entities.Record;
 import com.fdorigo.rmfly.jpa.session.RecordFacade;
 import com.fdorigo.rmfly.wicket.components.AirplaneType;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.List;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
@@ -19,6 +20,7 @@ import org.apache.wicket.extensions.yui.calendar.DatePicker;
 import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.html.form.DropDownChoice;
 import org.apache.wicket.markup.html.form.Form;
+import org.apache.wicket.markup.html.form.NumberTextField;
 import org.apache.wicket.markup.html.form.Radio;
 import org.apache.wicket.markup.html.form.RadioGroup;
 import org.apache.wicket.markup.html.form.SimpleFormComponentLabel;
@@ -51,14 +53,18 @@ public final class RecordPage extends BasePage {
 
     private final Boolean validNnumber;
 
+    private final Boolean formControlsEnabled;
+
     public RecordPage() {
         validNnumber = false;
+        formControlsEnabled = true;
         init();
     }
 
     public RecordPage(PageParameters params) {
 
         final String nNumberString = params.get("nNumber").toString();
+        formControlsEnabled = params.get("controls").toBoolean(true);
 
         if (StringUtils.isEmpty(nNumberString)) {
             validNnumber = false;
@@ -102,7 +108,7 @@ public final class RecordPage extends BasePage {
             nNumberField.add(AttributeModifier.append("placeholder", "Not Found"));
         }
 
-        DropDownChoice<AirplaneType> listCategories = new DropDownChoice<AirplaneType>(
+        DropDownChoice<AirplaneType> listCategories = new DropDownChoice<>(
                 "category", new PropertyModel<>(this, "selected"), Arrays.asList(AirplaneType.values()));
         listCategories.setRequired(true);
 
@@ -117,10 +123,14 @@ public final class RecordPage extends BasePage {
         final TextField<String> addressZipField = new TextField<>("addressZip");
         final TextField<String> emailAddressField = new TextField<>("emailAddress");
         emailAddressField.add(EmailAddressValidator.getInstance());
+        emailAddressField.setRequired(true);
         final TextField<String> airplaneMakeField = new TextField<>("airplaneMake");
         final TextField<String> airplaneModelField = new TextField<>("airplaneModel");
-        final TextField<Integer> manufactureYearField = new TextField<>("manufactureYear");
-
+        final NumberTextField<Integer> manufactureYearField = new NumberTextField<>("manufactureYear");
+        manufactureYearField.setType(Integer.class);
+        int year = Calendar.getInstance().get(Calendar.YEAR);
+        manufactureYearField.setMinimum(1903).setMaximum(year);
+        
         RadioGroup<String> group = new RadioGroup<>("needJudging");
         group.setRequired(true);
         add(group);
@@ -138,16 +148,23 @@ public final class RecordPage extends BasePage {
         Model<Record> recordModel = new Model<>(record);
         Form<Record> recordForm = new Form<>("recordForm", new CompoundPropertyModel<>(recordModel));
 
-        recordForm.add(new Button("save") {
+        final Button saveRecordButton = new Button("save") {
             @Override
             public void onSubmit() {
                 record.setCategory(selected.toString());
+                if (manufactureYearField.getInput() != null) {
+                    record.setManufactureYear(manufactureYearField.getInput());
+                }
                 recordFacade.edit(record);
                 setResponsePage(HomePage.class);
             }
-        });
+        };
+        if (formControlsEnabled != true) {
+            saveRecordButton.setVisible(false);
+        }        
+        recordForm.add(saveRecordButton);
         
-        Button deleteRecordButton = new Button("delete") {
+        final Button deleteRecordButton = new Button("delete") {
             @Override
             public void onSubmit() {
                 recordFacade.remove(record);
@@ -156,7 +173,11 @@ public final class RecordPage extends BasePage {
         };
         
         deleteRecordButton.setDefaultFormProcessing(false);
+        if (formControlsEnabled != true) {
+            deleteRecordButton.setVisible(false);
+        }
         recordForm.add(deleteRecordButton);
+        
         
         add(recordForm);
 
